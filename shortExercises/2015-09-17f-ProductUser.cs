@@ -1,6 +1,6 @@
 /*
 Write a C# program to display the result of multiplying
-two numbers enterd by the user
+two numbers entered by the user
 */
 
 public class ProductUser

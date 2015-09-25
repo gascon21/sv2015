@@ -4,6 +4,7 @@
 */
 
 // Changes:
+// Version 0.01i : Checking screen limits
 // Version 0.01h : Moving in four directions
 // Version 0.01g : Clear screen before "drawing each frame"
 // Version 0.01f : Allow to move several times, pressing 4 (+Return)
@@ -31,16 +32,20 @@ public class ConsolePrincess
             
             key = Convert.ToInt32( Console.ReadLine() );
             if (key == 4)
-                x = x-1;
-
+                if (x > 0)
+                    x = x-1;
+            
             if (key == 6)
-                x = x+1;
-
+                if (x < 79)
+                    x = x+1;
+            
             if (key == 8)
-                y = y-1;
-
+                if (y > 0)
+                    y = y-1;
+            
             if (key == 2)
-                y = y+1;
+                if (y < 24)
+                    y = y+1;
         }
     }
 }

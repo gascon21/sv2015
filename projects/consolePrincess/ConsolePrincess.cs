@@ -21,16 +21,20 @@ public class ConsolePrincess
 
             key = Convert.ToInt32( Console.ReadLine() );
             if (key == 4)
-                x = x-1;
+                if (x > 0)
+                    x = x-1;
 
             if (key == 6)
-                x = x+1;
+                if (x < 79)
+                    x = x+1;
 
             if (key == 8)
-                y = y-1;
+                if (y > 0)
+                    y = y-1;
 
             if (key == 2)
-                y = y+1;
+                if (y < 24)
+                    y = y+1;
         }
     }
 }

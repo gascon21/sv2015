@@ -71,3 +71,12 @@ if (key == 8)
 if (key == 2)
     y = y+1;
 ```
+
+
+## Version 0.01i : Checking screen limits
+
+```csharp
+if (key == 4)
+    if (x > 0)
+        x = x-1;
+```

@@ -57,3 +57,17 @@ while ( 3 > 2 )  // Always
 ```csharp
 Console.Clear();
 ```
+
+
+## Version 0.01h : Moving in four directions
+
+```csharp
+if (key == 6)
+    x = x+1;
+
+if (key == 8)
+    y = y-1;
+
+if (key == 2)
+    y = y+1;
+```

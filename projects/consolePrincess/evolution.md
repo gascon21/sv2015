@@ -88,3 +88,14 @@ if (key == 4)
 if ((key == 4) && (x > 0))
     x = x-1;
 ```
+
+
+## Version 0.02a : No need to press Return
+
+```csharp
+ConsoleKeyInfo key;
+...
+key = Console.ReadKey();
+if ((key.KeyChar == '4') && (x > 0))
+    x = x-1;
+```

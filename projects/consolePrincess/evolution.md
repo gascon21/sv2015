@@ -80,3 +80,11 @@ if (key == 4)
     if (x > 0)
         x = x-1;
 ```
+
+
+## Version 0.01j : Checking screen limits (v2)
+
+```csharp
+if ((key == 4) && (x > 0))
+    x = x-1;
+```

@@ -107,3 +107,11 @@ if (((key.KeyChar == '4') || (key.KeyChar == 'a'))
         && (x > 0))
     x = x-1;
 ```
+
+## Version 0.02c : Two sets of keys (second approach: cursor keys)
+
+```csharp
+if (((key.KeyChar == '4') || (key.Key == ConsoleKey.LeftArrow))
+        && (x > 0))
+    x = x-1;
+```

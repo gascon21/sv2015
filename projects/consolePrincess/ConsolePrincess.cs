@@ -20,19 +20,19 @@ public class ConsolePrincess
             Console.WriteLine("A");
 
             key = Console.ReadKey();
-            if (((key.KeyChar == '4') || (key.KeyChar == 'a'))
+            if (((key.KeyChar == '4') || (key.Key == ConsoleKey.LeftArrow))
                     && (x > 0))
                 x = x-1;
 
-            if (((key.KeyChar == '6')  || (key.KeyChar == 'd'))
+            if (((key.KeyChar == '6')  || (key.Key == ConsoleKey.RightArrow))
                     && (x < 79))
                 x = x+1;
 
-            if (((key.KeyChar == '8')  || (key.KeyChar == 'w'))
+            if (((key.KeyChar == '8')  || (key.Key == ConsoleKey.UpArrow))
                     && (y > 0))
                 y = y-1;
 
-            if (((key.KeyChar == '2')  || (key.KeyChar == 's'))
+            if (((key.KeyChar == '2')  || (key.Key == ConsoleKey.DownArrow))
                     && (y < 24))
                 y = y+1;
         }

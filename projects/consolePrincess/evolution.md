@@ -99,3 +99,11 @@ key = Console.ReadKey();
 if ((key.KeyChar == '4') && (x > 0))
     x = x-1;
 ```
+
+## Version 0.02b : Two sets of keys (first approach: 2468 + WASD)
+
+```csharp
+if (((key.KeyChar == '4') || (key.KeyChar == 'a'))
+        && (x > 0))
+    x = x-1;
+```

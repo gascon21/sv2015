@@ -129,3 +129,33 @@ while ( finished == 0 )
 }    
     
 ```
+
+
+## Version 0.03a : A moving element (first approach: when a key is pressed)
+
+```csharp
+int birdX = 20;
+int birdY = 5;
+int birdSpeed = 1;
+
+while ( finished == 0 )
+{
+    // Draw elements on screen
+    Console.Clear();
+    Console.SetCursorPosition(x,y);
+    Console.WriteLine("A");  // Player
+    Console.SetCursorPosition(birdX,birdY);
+    Console.WriteLine("W");  // Bird
+
+    ...
+    // Move other elements
+    if (birdX == 79)
+        birdSpeed = -1;
+    if (birdX == 0)
+        birdSpeed = 1;
+        
+    birdX = birdX + birdSpeed;
+
+}    
+    
+```

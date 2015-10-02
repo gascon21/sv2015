@@ -159,3 +159,33 @@ while ( finished == 0 )
 }    
     
 ```
+
+## Version 0.03b : A moving element (second approach: independent)
+
+```csharp
+while ( finished == 0 )
+{
+    // Draw elements on screen
+    ...
+    
+    // Check keys and move player
+    if (Console.KeyAvailable)
+    {
+        key = Console.ReadKey();
+        if (((key.KeyChar == '4') || (key.Key == ConsoleKey.LeftArrow))
+                && (x > 0))
+            x = x-1;
+        ...
+            
+        if (key.Key == ConsoleKey.Escape)
+            finished = 1;
+    }
+        
+    // Move other elements
+    ...
+        
+    // Pause till next frame (10fps)
+    Thread.Sleep(100);
+}    
+    
+```

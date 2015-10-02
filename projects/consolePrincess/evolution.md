@@ -115,3 +115,17 @@ if (((key.KeyChar == '4') || (key.Key == ConsoleKey.LeftArrow))
         && (x > 0))
     x = x-1;
 ```
+
+## Version 0.02d : Esc key to finish
+
+```csharp
+int finished = 0;
+
+while ( finished == 0 )
+{
+    ...
+    if (key.Key == ConsoleKey.Escape)
+        finished = 1;
+}    
+    
+```

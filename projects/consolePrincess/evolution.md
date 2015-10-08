@@ -189,3 +189,20 @@ while ( finished == 0 )
 }    
     
 ```
+
+
+## Version 0.03c : Check collisions and game state - end if bird is hit
+
+```csharp
+// Check collisions and game state
+if ((birdX == x) && (birdY == y))
+    finished = 1;
+...
+// End of the game
+Console.Clear();
+Console.SetCursorPosition(35,12);
+Console.Write("Game Over!");
+
+Console.SetCursorPosition(1,18);
+Console.ReadKey();
+```

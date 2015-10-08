@@ -28,13 +28,26 @@ public class Game
             Hardware.ShowHiddenScreen();
 
             // Check keys and move player
-            if (Hardware.KeyPressed(Hardware.KEY_RIGHT))
+            if (Hardware.KeyPressed(Hardware.KEY_RIGHT)
+                    && (x < 750))
                 x += speed;
+
+            if (Hardware.KeyPressed(Hardware.KEY_LEFT)
+                    && (x > 0))
+                x -= speed;
+
+            if (Hardware.KeyPressed(Hardware.KEY_UP)
+                    && (y > 0))
+                y -= speed;
+
+            if (Hardware.KeyPressed(Hardware.KEY_DOWN)
+                    && (y < 493))
+                y += speed;
 
             if (Hardware.KeyPressed(Hardware.KEY_ESC))
                 finished = 1;
 
-            // Pause till next frame (10fps)
+            // Pause till next frame (50fps)
             Hardware.Pause(20);
         }
     }

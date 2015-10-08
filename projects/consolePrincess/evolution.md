@@ -206,3 +206,16 @@ Console.Write("Game Over!");
 Console.SetCursorPosition(1,18);
 Console.ReadKey();
 ```
+
+
+## Version 0.03d : Colors in console
+
+```csharp
+Console.ForegroundColor = ConsoleColor.Red;
+Console.SetCursorPosition(x,y);
+Console.WriteLine("A");  // Player
+
+Console.ForegroundColor = ConsoleColor.Yellow;
+Console.SetCursorPosition(birdX,birdY);
+Console.WriteLine("W");  // Bird
+```

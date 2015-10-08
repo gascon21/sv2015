@@ -11,16 +11,22 @@ public class Game
     public static void Main()
     {
         bool fullScreen = false;
-        Hardware.Init(800, 600, 24, fullScreen);
+        short screenWidth = 800;
+        short screenHeight = 600;
+        Hardware.Init(screenWidth, screenHeight, 24, fullScreen);
         Image player = new Image("data\\player.bmp");
         Image bird = new Image("data\\bird.bmp");
 
         int x = 400;
         int y = 250;
+        int playerWidth = 50;
+        int playerHeight = 107;
         int speed = 3;
 
         int birdX = 500;
-        int birdY = 50;
+        int birdY = 150;
+        int birdWidth = 48;
+        int birdHeight = 48;
         int birdSpeed = -2;
 
         int finished = 0;
@@ -36,7 +42,7 @@ public class Game
 
             // Check keys and move player
             if (Hardware.KeyPressed(Hardware.KEY_RIGHT)
-                    && (x < 750))
+                    && (x < screenWidth-playerWidth))
                 x += speed;
 
             if (Hardware.KeyPressed(Hardware.KEY_LEFT)
@@ -48,17 +54,24 @@ public class Game
                 y -= speed;
 
             if (Hardware.KeyPressed(Hardware.KEY_DOWN)
-                    && (y < 493))
+                    && (y < screenHeight-playerHeight))
                 y += speed;
 
             if (Hardware.KeyPressed(Hardware.KEY_ESC))
                 finished = 1;
 
             // Move other elements
-            if ((birdX > 750) || (birdX < 5))
+            if ((birdX > screenWidth-birdWidth) || (birdX < 0))
                 birdSpeed = -birdSpeed;
 
             birdX = birdX + birdSpeed;
+
+            // Check collisions and game state
+            if ((birdX > x-birdWidth)
+                    && (birdX < x+playerWidth)
+                    && (birdY > y-birdHeight)
+                    && (birdY < y+playerHeight))
+                finished = 1;
 
             // Pause till next frame (50fps)
             Hardware.Pause(20);

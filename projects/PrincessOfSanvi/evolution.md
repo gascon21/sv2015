@@ -83,3 +83,24 @@ if ((birdX > 750) || (birdX < 5))
 
 birdX = birdX + birdSpeed;
 ```
+
+
+## Version 0.04 : Basic collision detection (overlapping rectangles)
+
+```csharp
+int x = 400;
+int y = 250;
+int playerWidth = 50;
+int playerHeight = 107;
+int birdX = 500;
+int birdY = 150;
+int birdWidth = 48;
+int birdHeight = 48;
+...
+// Check collisions and game state
+if ((birdX > x-birdWidth)
+        && (birdX < x+playerWidth)
+        && (birdY > y-birdHeight)
+        && (birdY < y+playerHeight))
+    finished = 1;
+```

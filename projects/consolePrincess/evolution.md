@@ -219,3 +219,27 @@ Console.ForegroundColor = ConsoleColor.Yellow;
 Console.SetCursorPosition(birdX,birdY);
 Console.WriteLine("W");  // Bird
 ```
+
+
+
+## Version 0.03e : Two differents "images"
+
+```csharp
+// Draw elements on screen
+Console.Clear();
+Console.ForegroundColor = ConsoleColor.Red;
+Console.SetCursorPosition(x,y);
+if (frame == 1)
+    Console.WriteLine("A");  // Player
+else
+    Console.WriteLine("À");
+...
+key = Console.ReadKey();
+if (((key.KeyChar == '4') || (key.Key == ConsoleKey.LeftArrow))
+        && (x > 0))
+{
+    //frame = frame == 1 ? 0 : 1;
+    frame = (frame + 1) % 2;
+    x = x-1;
+}
+```

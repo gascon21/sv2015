@@ -15,6 +15,7 @@ public class Game
         short screenHeight = 600;
         Hardware.Init(screenWidth, screenHeight, 24, fullScreen);
         Image player = new Image("data\\player.bmp");
+        Image player2 = new Image("data\\player2.bmp");
         Image bird = new Image("data\\bird.bmp");
 
         int x = 400;
@@ -28,7 +29,7 @@ public class Game
         int birdWidth = 48;
         int birdHeight = 48;
         int birdSpeed = -2;
-
+        int frame = 1;
         int finished = 0;
 
         // Game Loop
@@ -36,26 +37,41 @@ public class Game
         {
             // Draw elements on screen
             Hardware.ClearScreen();
-            Hardware.DrawHiddenImage(player, x, y);
+            if (frame < 5)
+                Hardware.DrawHiddenImage(player, x, y);
+            else
+                Hardware.DrawHiddenImage(player2, x, y);
             Hardware.DrawHiddenImage(bird, birdX, birdY);
             Hardware.ShowHiddenScreen();
 
             // Check keys and move player
             if (Hardware.KeyPressed(Hardware.KEY_RIGHT)
                     && (x < screenWidth-playerWidth))
+            {
+                frame = (frame + 1) % 10;
                 x += speed;
+            }
 
             if (Hardware.KeyPressed(Hardware.KEY_LEFT)
                     && (x > 0))
+            {
+                frame = (frame + 1) % 10;
                 x -= speed;
+            }
 
             if (Hardware.KeyPressed(Hardware.KEY_UP)
                     && (y > 0))
+            {
+                frame = (frame + 1) % 10;
                 y -= speed;
+            }
 
             if (Hardware.KeyPressed(Hardware.KEY_DOWN)
                     && (y < screenHeight-playerHeight))
+            {
+                frame = (frame + 1) % 10;
                 y += speed;
+            }
 
             if (Hardware.KeyPressed(Hardware.KEY_ESC))
                 finished = 1;

@@ -104,3 +104,26 @@ if ((birdX > x-birdWidth)
         && (birdY < y+playerHeight))
     finished = 1;
 ```
+
+
+## Version 0.05 : Two images
+
+```csharp
+Image player = new Image("data\\player.bmp");
+Image player2 = new Image("data\\player2.bmp");
+...
+// Draw elements on screen
+Hardware.ClearScreen();
+if (frame < 5)
+    Hardware.DrawHiddenImage(player, x, y);
+else
+    Hardware.DrawHiddenImage(player2, x, y);
+...
+// Check keys and move player
+if (Hardware.KeyPressed(Hardware.KEY_RIGHT)
+        && (x < screenWidth-playerWidth))
+{
+    frame = (frame + 1) % 10;
+    x += speed;
+}
+```

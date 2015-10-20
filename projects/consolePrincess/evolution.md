@@ -243,3 +243,18 @@ if (((key.KeyChar == '4') || (key.Key == ConsoleKey.LeftArrow))
     x = x-1;
 }
 ```
+
+
+## Version 0.03f : Example of usage of "bool"
+
+```csharp
+bool finished = false;
+...
+while ( ! finished )
+{
+    ...
+    // Check collisions and game state
+    if ((birdX == x) && (birdY == y))
+        finished = true;
+}
+```

@@ -1,6 +1,6 @@
 # Home accounting - Evolution
 
-## Version 0.01a : Display the main menu
+## Version 0.01 : Display the main menu
 
 ```csharp
 int option;
@@ -31,4 +31,34 @@ do
     }
 }
 while(option!=0);
+```
+
+## Version 0.02 : Enter one transaction
+
+```csharp
+byte day, month;
+ushort year;
+double amount;
+string description, account, category;
+...
+Console.WriteLine("Enter the amount:");
+amount = Convert.ToDouble(Console.ReadLine());
+
+Console.WriteLine("Enter the description:");
+description = Console.ReadLine();
+
+Console.WriteLine("Enter the day:");
+day = Convert.ToByte(Console.ReadLine());
+
+Console.WriteLine("Enter the month:");
+month = Convert.ToByte(Console.ReadLine());
+
+Console.WriteLine("Enter the year:");
+year = Convert.ToUInt16(Console.ReadLine());
+
+Console.WriteLine("Enter the account:");
+account = Console.ReadLine();
+
+Console.WriteLine("Enter the category:");
+category = Console.ReadLine();
 ```

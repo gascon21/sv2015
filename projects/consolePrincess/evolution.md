@@ -278,3 +278,35 @@ if (((key.KeyChar == '6')  || (key.Key == ConsoleKey.RightArrow))
     x++;
 }
 ```
+
+## Version 0.04a : Several birds, first approach: variables x 3
+
+```csharp
+byte birdX2 = 12;
+byte birdY2 = 9;
+sbyte birdSpeed2 = -1;
+
+byte birdX3 = 45;
+byte birdY3 = 15;
+sbyte birdSpeed3 = 1;
+...
+// Move other elements
+if ((birdX == 79) || (birdX == 0))
+    birdSpeed = (sbyte) -birdSpeed;
+if ((birdX2 == 79) || (birdX2 == 0))
+    birdSpeed2 = (sbyte) -birdSpeed2;
+if ((birdX3 == 79) || (birdX3 == 0))
+    birdSpeed3 = (sbyte) -birdSpeed3;
+    
+birdX = (byte) (birdX + birdSpeed);
+birdX2 = (byte) (birdX2 + birdSpeed2);
+birdX3 = (byte) (birdX3 + birdSpeed3);
+
+// Check collisions and game state
+if ((birdX == x) && (birdY == y))
+    finished = true;
+if ((birdX2 == x) && (birdY2 == y))
+    finished = true;
+if ((birdX3 == x) && (birdY3 == y))
+    finished = true;
+```

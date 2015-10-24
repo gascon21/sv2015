@@ -310,3 +310,33 @@ if ((birdX2 == x) && (birdY2 == y))
 if ((birdX3 == x) && (birdY3 == y))
     finished = true;
 ```
+
+
+## Version 0.04b : Several birds, second approach: parallel arrays
+
+```csharp
+byte[] birdX = { 20, 30, 40, 60, 15};
+byte[] birdY = { 5, 7, 9, 13, 19};
+sbyte[] birdSpeed = {1, -1, 1, -1, -1};
+...
+for(int i=0; i<5; i++)
+{
+    Console.SetCursorPosition(birdX[i],birdY[i]);
+    Console.WriteLine("W");  // Bird
+}
+...
+// Move other elements
+for(int i=0; i<5; i++)
+{
+    if ((birdX[i] == 79) || (birdX[i] == 0))
+        birdSpeed[i] = (sbyte) -birdSpeed[i];
+}
+    
+for(int i=0; i<5; i++)
+    birdX[i] = (byte) (birdX[i] + birdSpeed[i]);
+
+// Check collisions and game state
+for(int i=0; i<5; i++)
+    if ((birdX[i] == x) && (birdY[i] == y))
+        finished = true;
+```

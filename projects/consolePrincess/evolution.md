@@ -258,3 +258,23 @@ while ( ! finished )
         finished = true;
 }
 ```
+
+
+## Version 0.03g : Optimized data types
+
+```csharp
+byte x = 40;
+byte y = 12;
+byte birdX = 20;
+byte birdY = 5;
+sbyte birdSpeed = 1;
+ConsoleKeyInfo key;
+byte frame = 1;
+...
+if (((key.KeyChar == '6')  || (key.Key == ConsoleKey.RightArrow))
+        && (x < 79))
+{
+    frame = (byte) ((frame + 1) % 2);
+    x++;
+}
+```

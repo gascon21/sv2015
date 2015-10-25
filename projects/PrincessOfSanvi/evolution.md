@@ -127,3 +127,28 @@ if (Hardware.KeyPressed(Hardware.KEY_RIGHT)
     x += speed;
 }
 ```
+
+
+## Version 0.06 : Optimized data types
+
+```csharp
+short birdX = 500;
+short birdY = 150;
+ushort birdWidth = 48;
+ushort birdHeight = 48;
+float birdSpeed = -2.8f;
+byte frame = 1;
+bool finished = false;
+
+// Game Loop
+while (! finished)
+{
+...
+    if (Hardware.KeyPressed(Hardware.KEY_ESC))
+        finished = true;
+    ...
+
+    birdX = (short)(birdX + birdSpeed);
+    ...
+}
+```

@@ -18,22 +18,22 @@ public class Game
         Image player2 = new Image("data\\player2.bmp");
         Image bird = new Image("data\\bird.bmp");
 
-        int x = 400;
-        int y = 250;
-        int playerWidth = 50;
-        int playerHeight = 107;
-        int speed = 3;
+        short x = 400;
+        short y = 250;
+        ushort playerWidth = 50;
+        ushort playerHeight = 107;
+        float speed = 3.8f;
 
-        int birdX = 500;
-        int birdY = 150;
-        int birdWidth = 48;
-        int birdHeight = 48;
-        int birdSpeed = -2;
-        int frame = 1;
-        int finished = 0;
+        short birdX = 500;
+        short birdY = 150;
+        ushort birdWidth = 48;
+        ushort birdHeight = 48;
+        float birdSpeed = -2.8f;
+        byte frame = 1;
+        bool finished = false;
 
         // Game Loop
-        while (finished == 0)
+        while (! finished)
         {
             // Draw elements on screen
             Hardware.ClearScreen();
@@ -48,46 +48,46 @@ public class Game
             if (Hardware.KeyPressed(Hardware.KEY_RIGHT)
                     && (x < screenWidth-playerWidth))
             {
-                frame = (frame + 1) % 10;
-                x += speed;
+                frame = (byte) ((frame + 1) % 10);
+                x +=(short) speed;
             }
 
             if (Hardware.KeyPressed(Hardware.KEY_LEFT)
                     && (x > 0))
             {
-                frame = (frame + 1) % 10;
-                x -= speed;
+                frame = (byte)((frame + 1) % 10);
+                x -= (short) speed;
             }
 
             if (Hardware.KeyPressed(Hardware.KEY_UP)
                     && (y > 0))
             {
-                frame = (frame + 1) % 10;
-                y -= speed;
+                frame = (byte)((frame + 1) % 10);
+                y -= (short) speed;
             }
 
             if (Hardware.KeyPressed(Hardware.KEY_DOWN)
                     && (y < screenHeight-playerHeight))
             {
-                frame = (frame + 1) % 10;
-                y += speed;
+                frame = (byte)((frame + 1) % 10);
+                y += (short) speed;
             }
 
             if (Hardware.KeyPressed(Hardware.KEY_ESC))
-                finished = 1;
+                finished = true;
 
             // Move other elements
             if ((birdX > screenWidth-birdWidth) || (birdX < 0))
                 birdSpeed = -birdSpeed;
 
-            birdX = birdX + birdSpeed;
+            birdX = (short)(birdX + birdSpeed);
 
             // Check collisions and game state
             if ((birdX > x-birdWidth)
                     && (birdX < x+playerWidth)
                     && (birdY > y-birdHeight)
                     && (birdY < y+playerHeight))
-                finished = 1;
+                finished = true;
 
             // Pause till next frame (50fps)
             Hardware.Pause(20);

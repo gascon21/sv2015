@@ -105,3 +105,24 @@ case 2:
         amounts[0],descriptions[0],categories[0], accounts[0]);
     break;
 ```
+
+
+## Version 0.05 : Parallel arrays (up to 100,000 transactions)
+
+```csharp
+uint numElements = 0;
+...
+case 1:
+    Console.WriteLine("Enter the amount:");
+    amounts[numElements] = Convert.ToDouble(Console.ReadLine());
+    ...
+    numElements++;    
+    break;
+...
+case 2:
+    for (uint i = 0; i < numElements; i++)
+        Console.WriteLine("{0}-{1}-{2}: {3} Euros | {4} (Cat:{5}, Acc:{6})",
+            days[i].ToString("00"), months[i].ToString("00"),years[i].ToString("0000"),
+            amounts[i],descriptions[i],categories[i], accounts[i]);
+    break;
+```

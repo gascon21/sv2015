@@ -78,3 +78,30 @@ case 2:
         amount,description,category, account);
     break;
 ```
+
+
+## Version 0.04 : Parallel arrays (but still one transaction)
+
+```csharp
+const int SIZE = 100000;
+byte option;
+byte[] days = new byte[SIZE];
+byte[] months = new byte[SIZE];
+ushort[] years = new ushort [SIZE];
+double[] amounts = new double[SIZE];
+string[] descriptions = new string[SIZE];
+string[] accounts = new string[SIZE];
+string[] categories = new string[SIZE];
+...
+case 1:
+    Console.WriteLine("Enter the amount:");
+    amounts[0] = Convert.ToDouble(Console.ReadLine());
+    ...
+    break;
+...
+case 2:
+    Console.WriteLine("{0}-{1}-{2}: {3} Euros | {4} (Cat:{5}, Acc:{6})",
+        days[0].ToString("00"), months[0].ToString("00"),years[0].ToString("0000"),
+        amounts[0],descriptions[0],categories[0], accounts[0]);
+    break;
+```

@@ -152,3 +152,22 @@ while (! finished)
     ...
 }
 ```
+
+
+## Version 0.07 : Several birds
+
+```csharp
+float[] birdX = { 500, 200, 150, 600, 100 };
+float[] birdY = { 150, 200, 300, 400, 520 };
+float[] birdSpeed = { -2.8f, 1.4f, 3.2f, -1.2f, 2.0f };
+
+// Game Loop
+while (! finished)
+{
+...
+    for (int i = 0; i < 5; i++)
+        Hardware.DrawHiddenImage(bird, 
+            (short) birdX[i], (short) birdY[i]);
+    ...
+}
+```

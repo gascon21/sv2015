@@ -19,8 +19,8 @@ public class CharValue
 
         for (byte symbol = 32; symbol <= 127; symbol++)
             Console.Write( "{0}={1}   ", 
-				symbol.ToString("000"), 
-				Convert.ToChar(symbol) );
+                symbol.ToString("000"), 
+                Convert.ToChar(symbol) );
             
         Console.WriteLine();
     }

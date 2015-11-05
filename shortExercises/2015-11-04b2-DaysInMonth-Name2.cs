@@ -9,8 +9,8 @@ public class monthdays2
         const int SIZE = 12;
         int position = -1;
         string[] names= {"january","february"," march","april",
-			"may","june","july","august",
-			"september","october","november","december"};
+            "may","june","july","august",
+            "september","october","november","december"};
         ushort[] days = {31,28,31,30,31,30,31,31,30,31,30,31};
         
         Console.Write("Enter month:");
@@ -24,6 +24,6 @@ public class monthdays2
             }  
         }    
         if (position != -1)
-			Console.Write("Days: {0}",days[position]);
+            Console.Write("Days: {0}",days[position]);
     } 
 }

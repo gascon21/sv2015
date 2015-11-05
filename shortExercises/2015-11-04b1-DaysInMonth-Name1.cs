@@ -8,8 +8,8 @@ public class monthdays
     {
         const int SIZE = 12;
         string[] names= {"january","february"," march","april",
-			"may","june","july","august",
-			"september","october","november","december"};
+            "may","june","july","august",
+            "september","october","november","december"};
         ushort[] days = {31,28,31,30,31,30,31,31,30,31,30,31};
         
         Console.Write("Enter month:");

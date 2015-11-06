@@ -18,17 +18,57 @@ public class Game
         Image player2 = new Image("data\\player2.bmp");
         Image bird = new Image("data\\bird.bmp");
 
-        short x = 400;
-        short y = 250;
+        Image brick1 = new Image("data\\tileBrick01.bmp");
+        Image brick2 = new Image("data\\tileBrick02.bmp");
+        Image brick3 = new Image("data\\tileBrick03.bmp");
+        Image floor = new Image("data\\tileFloor1.bmp");
+        Image floorL = new Image("data\\tileFloorLeft.bmp");
+        Image floorR = new Image("data\\tileFloorPit.bmp");
+        Image ceiling = new Image("data\\ceiling.bmp");
+        Image backB1 = new Image("data\\backBrick01.bmp");
+        Image backB2 = new Image("data\\backBrick02.bmp");
+        Image torch1 = new Image("data\\tileTorch1.bmp");
+        Image torch2 = new Image("data\\tileTorch2a.bmp");
+        Image pit1 = new Image("data\\tilePit01.bmp");
+        Image pit2= new Image("data\\tilePit02.bmp");
+        Image pit3 = new Image("data\\tilePit03.bmp");
+
+
+        short x = 200;
+        short y = 240;
         ushort playerWidth = 50;
         ushort playerHeight = 107;
         float speed = 3.8f;
 
         float[] birdX = { 500, 200, 150, 600, 100 };
-        float[] birdY = { 150, 200, 300, 400, 520 };
+        float[] birdY = { 120, 190, 40, 400, 470 };
         ushort birdWidth = 48;
         ushort birdHeight = 48;
         float[] birdSpeed = { -2.8f, 1.4f, 3.2f, -1.2f, 2.0f };
+
+        byte tileWidth = 80;
+        byte tileHeight = 53;
+        byte levelWidth = 10;
+        byte levelHeight = 10;
+        // 0 = Empty, 1 = Brick1, 2 = Brick2, 3 = Brick3, 4 = Normal floor
+        // 5 = Floor left, 6= right, 7 = Ceiling
+        // 10=Upper back brick, 11=lower, 
+        // 13 =upper torch 1, 14=2, 15=lower
+        // 20=pit side 1
+        byte[,] levelDescription =
+        {
+            {7,7,7,7,7,7,7,7,7,7},
+            {10,0,0,0,10,0,0,0,10,0},
+            {11,0,0,0,11,0,0,0,11,0},
+            {0,0,0,0,0,0,0,0,0,0},
+            {10,0,0,13,10,13,0,0,10,0},
+            {11,0,0,15,11,15,0,0,11,0},
+            {4,4,4,4,4,4,4,6,0,5},
+            {1,1,1,1,1,1,1,20,0,1},
+            {2,2,2,2,2,2,2,21,0,2},
+            {3,3,3,3,3,3,3,22,0,3},
+        };
+
         byte frame = 1;
         bool finished = false;
 
@@ -37,6 +77,19 @@ public class Game
         {
             // Draw elements on screen
             Hardware.ClearScreen();
+
+            for(int row=0; row<levelHeight; row++)
+                for (int col = 0; col < levelWidth; col++)
+                {
+                    int xPos = col * tileWidth;
+                    int yPos = row * tileHeight;
+                    switch(levelDescription[row,col])
+                    {
+                        case 1: Hardware.DrawHiddenImage(brick1, xPos, yPos); break;
+                        case 2: Hardware.DrawHiddenImage(brick2, xPos, yPos); break;
+                    }
+                }
+
             if (frame < 5)
                 Hardware.DrawHiddenImage(player, x, y);
             else

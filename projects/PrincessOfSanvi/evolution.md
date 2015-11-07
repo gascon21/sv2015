@@ -171,3 +171,44 @@ while (! finished)
     ...
 }
 ```
+
+
+## Version 0.08 : Level background, using tiles
+
+```csharp
+Image brick1 = new Image("data\\tileBrick01.bmp");
+Image brick2 = new Image("data\\tileBrick02.bmp");
+...
+Image pit2= new Image("data\\tilePit02.bmp");
+Image pit3 = new Image("data\\tilePit03.bmp");
+...
+byte[,] levelDescription =
+{
+    {7,7,7,7,7,7,7,7,7,7},
+    {10,0,0,0,10,0,0,0,10,0},
+    {11,0,0,0,11,0,0,0,11,0},
+    {0,0,0,0,0,0,0,0,0,0},
+    {10,0,0,13,10,13,0,0,10,0},
+    {11,0,0,15,11,15,0,0,11,0},
+    {4,4,4,4,4,4,4,6,0,5},
+    {1,1,1,1,1,1,1,20,0,1},
+    {2,2,2,2,2,2,2,21,0,2},
+    {3,3,3,3,3,3,3,22,0,3},
+};
+...
+// Draw elements on screen
+Hardware.ClearScreen();
+for(int row=0; row<levelHeight; row++)
+    for (int col = 0; col < levelWidth; col++)
+    {
+        int xPos = col * tileWidth;
+        int yPos = row * tileHeight;
+        switch(levelDescription[row,col])
+        {
+            case 1: Hardware.DrawHiddenImage(brick1, xPos, yPos); break;
+            case 2: Hardware.DrawHiddenImage(brick2, xPos, yPos); break;
+            ...
+            case 22: Hardware.DrawHiddenImage(pit3, xPos, yPos); break;
+        }
+    }
+```

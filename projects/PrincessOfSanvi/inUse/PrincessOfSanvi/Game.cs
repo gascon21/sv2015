@@ -1,8 +1,21 @@
 ﻿/*
-  First skeleton for a simple graphic game
-  Version A (based on console version 0.02: 
-  draw an image on screen and move it, until ESC)
+  Princess of Sanvi, a simple 2D game
 */
+
+/* --------------------------------------------------         
+   Versions history
+   
+   Num.   Date        Changes
+   ---------------------------------------------------
+   0.08  06-Nov-2015  Level background, using tiles
+   0.07  30-Oct-2015  Several birds
+   0.06  23-Oct-2015  Optimized data types
+   0.05  16-Oct-2015  Two images
+   0.04  09-Oct-2015  Basic collision detection (overlapping rectangles)
+   0.03  09-Oct-2015  A bird, moving on its own
+   0.02  09-Oct-2015  Moving in four directions, not leaving the screen
+   0.01  02-Oct-2015  Just display an image and move it to the left
+ ---------------------------------------------------- */
 
 using System;
 
@@ -33,7 +46,6 @@ public class Game
         Image pit2= new Image("data\\tilePit02.bmp");
         Image pit3 = new Image("data\\tilePit03.bmp");
 
-
         short x = 200;
         short y = 240;
         ushort playerWidth = 50;
@@ -54,7 +66,7 @@ public class Game
         // 5 = Floor left, 6= right, 7 = Ceiling
         // 10=Upper back brick, 11=lower, 
         // 13 =upper torch 1, 14=2, 15=lower
-        // 20=pit side 1
+        // 20=pit side 1, 21=2, 22=3
         byte[,] levelDescription =
         {
             {7,7,7,7,7,7,7,7,7,7},
@@ -87,6 +99,18 @@ public class Game
                     {
                         case 1: Hardware.DrawHiddenImage(brick1, xPos, yPos); break;
                         case 2: Hardware.DrawHiddenImage(brick2, xPos, yPos); break;
+                        case 3: Hardware.DrawHiddenImage(brick3, xPos, yPos); break;
+                        case 4: Hardware.DrawHiddenImage(floor, xPos, yPos); break;
+                        case 5: Hardware.DrawHiddenImage(floorL, xPos, yPos); break;
+                        case 6: Hardware.DrawHiddenImage(floorR, xPos, yPos); break;
+                        case 7: Hardware.DrawHiddenImage(ceiling, xPos, yPos); break;
+                        case 10: Hardware.DrawHiddenImage(backB1, xPos, yPos); break;
+                        case 11: Hardware.DrawHiddenImage(backB2, xPos, yPos); break;
+                        case 13: Hardware.DrawHiddenImage(torch2, xPos, yPos); break;
+                        case 15: Hardware.DrawHiddenImage(torch1, xPos, yPos); break;
+                        case 20: Hardware.DrawHiddenImage(pit1, xPos, yPos); break;
+                        case 21: Hardware.DrawHiddenImage(pit2, xPos, yPos); break;
+                        case 22: Hardware.DrawHiddenImage(pit3, xPos, yPos); break;
                     }
                 }
 

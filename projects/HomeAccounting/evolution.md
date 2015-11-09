@@ -126,3 +126,43 @@ case 2:
             amounts[i],descriptions[i],categories[i], accounts[i]);
     break;
 ```
+
+
+
+## Version 0.06 : Array of structs
+
+```csharp
+struct Transaction
+{
+    public byte days;
+    public byte months;
+    public ushort years;
+    public double amounts;
+    public string descriptions;
+    public string accounts;
+    public string categories;
+}
+...
+Transaction[] transactions = new Transaction [SIZE];
+...
+case 1:
+    Console.WriteLine("Enter the amount:");
+        transactions[numElements].amounts = 
+            Convert.ToDouble(Console.ReadLine());
+    ...
+    numElements++;    
+    break;
+...
+case 2:
+    for (uint i = 0; i < numElements; i++)
+        Console.WriteLine(
+            "{0}-{1}-{2}: {3} Euros | {4} (Cat:{5}, Acc:{6})",
+            transactions[i].days.ToString("00"), 
+            transactions[i].months.ToString("00"),
+            transactions[i].years.ToString("0000"),
+            transactions[i].amounts,
+            transactions[i].descriptions,
+            transactions[i].categories, 
+            transactions[i].accounts);
+    break;
+```

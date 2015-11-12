@@ -166,3 +166,30 @@ case 2:
             transactions[i].accounts);
     break;
 ```
+
+
+## Version 0.07a : Split into functions (first approach)
+
+```csharp
+const int SIZE = 100000;
+static Transaction [] transactions = new Transaction [SIZE];
+static uint numElements = 0;
+
+public static void DisplayMenu()
+{
+    Console.Clear();
+    Console.WriteLine("1.-Add expense or income");
+    Console.WriteLine("2.-View last Transactions");
+    Console.WriteLine("3.-Monthly Transactions");
+    Console.WriteLine("4.-Account totals");
+    Console.WriteLine("0.-Exit");
+}
+...
+public static void Main()
+{
+    char option;
+    do
+    {
+        DisplayMenu();
+        option = GetOption();
+```

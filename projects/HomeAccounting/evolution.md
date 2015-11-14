@@ -168,7 +168,7 @@ case 2:
 ```
 
 
-## Version 0.07a : Split into functions (first approach)
+## Version 0.07 : Split into functions (first approach)
 
 ```csharp
 const int SIZE = 100000;
@@ -192,4 +192,63 @@ public static void Main()
     {
         DisplayMenu();
         option = GetOption();
+```
+
+
+## Version 0.08 : Split into functions (finished)
+
+```csharp
+public static void AddTransaction()
+{
+    ...
+}
+
+
+public static void ViewLastTransactions()
+{
+    ...
+}
+    
+...
+switch (option)
+{
+    case '0':
+        break;
+        
+    case '1':
+        AddTransaction();
+        break;
+        
+    case '2':
+        ViewLastTransactions();
+        break;
+```
+
+## Version 0.09 : Transactions in a month
+
+```csharp
+public static void ViewTransactionsMonth()
+{
+    ushort searchyear;
+    byte searchmonth;
+    Console.Write("Enter year: ");
+    searchyear = Convert.ToUInt16(Console.ReadLine());
+    Console.Write("Enter the month: ");
+    searchmonth = Convert.ToByte(Console.ReadLine());
+    
+    for( uint i = 0; i<numElements;i++)
+    {
+        if( transactions[i].years == searchyear && 
+            transactions[i].months == searchmonth )
+                Console.WriteLine(
+                    "{0}-{1}-{2}: {3} Euros | {4} (Cat:{5}, Acc:{6})",
+                    transactions[i].days.ToString("00"), 
+                    transactions[i].months.ToString("00"),
+                    transactions[i].years.ToString("0000"),
+                    transactions[i].amounts,
+                    transactions[i].descriptions,
+                    transactions[i].categories, 
+                    transactions[i].accounts);
+    }
+}
 ```

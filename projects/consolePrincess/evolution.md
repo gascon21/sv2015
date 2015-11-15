@@ -340,3 +340,42 @@ for(int i=0; i<5; i++)
     if ((birdX[i] == x) && (birdY[i] == y))
         finished = true;
 ```
+
+
+## Version 0.05a : Structs
+
+```csharp
+struct Image
+{
+    public char symbol;
+    public char symbol2;
+    public ConsoleColor color;
+}
+
+struct Sprite
+{
+    public byte x;
+    public byte y;
+    public sbyte horSpeed;
+    public sbyte vertSpeed;
+    public Image image;
+}
+...
+player.image.color = ConsoleColor.Red;
+player.image.symbol = 'A';
+player.image.symbol2 = 'À';
+player.x = 40;
+player.y = 12;
+bird[0].image.color = ConsoleColor.Yellow;
+bird[0].image.symbol = 'W';
+bird[0].x = 20;
+bird[0].y = 5;
+bird[0].horSpeed = 1;
+bird[0].vertSpeed = 1;
+...
+for(int i=0; i<5; i++)
+{
+    bird[i].x = (byte) (bird[i].x + bird[i].horSpeed);
+    bird[i].y = (byte) (bird[i].y + bird[i].vertSpeed);
+}
+```

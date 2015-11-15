@@ -75,25 +75,25 @@ public class ConsolePrincess
         bird[1].x = 30;
         bird[1].y = 7;
         bird[1].horSpeed = -1;
-        bird[1].vertSpeed = 0;
+        bird[1].vertSpeed = -1;
         bird[2].image.color = ConsoleColor.Blue;
         bird[2].image.symbol = 'W';
         bird[2].x = 40;
         bird[2].y = 9;
         bird[2].horSpeed = 1;
-        bird[2].vertSpeed = -1;
+        bird[2].vertSpeed = 1;
         bird[3].image.color = ConsoleColor.Yellow;
         bird[3].image.symbol = 'W';
         bird[3].x = 60;
         bird[3].y = 13;
         bird[3].horSpeed = -1;
-        bird[3].vertSpeed = 0;
+        bird[3].vertSpeed = -1;
         bird[4].image.color = ConsoleColor.White;
         bird[4].image.symbol = 'W';
         bird[4].x = 15;
         bird[4].y = 19;
         bird[4].horSpeed = -1;
-        bird[4].vertSpeed = 0;
+        bird[4].vertSpeed = -1;
         
         ConsoleKeyInfo key;
         bool finished = false;
@@ -158,11 +158,12 @@ public class ConsolePrincess
             // Move other elements
             for(int i=0; i<5; i++)
             {
-                if ((bird[i].x >= 78) || (bird[i].x <= 1))
+                if ((bird[i].x == 79) || (bird[i].x == 0) || (bird[i].y == 24)
+                    || (bird[i].y == 0))
+                {
                     bird[i].horSpeed = (sbyte) -bird[i].horSpeed;
-
-                if ((bird[i].y >= 22) || (bird[i].y <= 1))
                     bird[i].vertSpeed = (sbyte) -bird[i].vertSpeed;
+                }
             }
                 
             for(int i=0; i<5; i++)

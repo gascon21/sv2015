@@ -138,7 +138,7 @@ public class citiesDatabase
                     for (int i = 0; i < numCities; i++)
                     {
                         string corrected = cities[i].
-                            nameSubstring(0,1).ToUpper();
+                            name.Substring(0,1).ToUpper();
                         for (int j = 1; j < cities[i].name.Length; j++)
                         {
                             if (cities[i].name[j-1] == ' ')
@@ -146,7 +146,7 @@ public class citiesDatabase
                             else
                                 corrected += Char.ToLower(cities[i].name[j]);
                         }
-                        cities[i].name = nameCorrected;
+                        cities[i].name = corrected;
                     }
                     Console.WriteLine("All name of cities corrected");
                     

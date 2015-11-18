@@ -33,6 +33,8 @@ public class citiesDatabase
             Console.WriteLine("2 - View all cities");
             Console.WriteLine("3 - Modify a record");
             Console.WriteLine("4 - Search in the records");
+            Console.WriteLine("5 - Insert a new record");
+            Console.WriteLine("6 - Delete a record");
             Console.WriteLine("0 - Exit");
             option = Convert.ToByte(Console.ReadLine());
             

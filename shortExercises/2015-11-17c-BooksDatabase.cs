@@ -1,6 +1,9 @@
 // Mónica Esteve Fernández
 // Books database
 
+// Note: this version uses functions
+// In the exam of Topic 4 you will not be allowed to use functions
+
 using System;
 public class Booksdatabase
 {

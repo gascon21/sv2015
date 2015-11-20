@@ -252,3 +252,32 @@ public static void ViewTransactionsMonth()
     }
 }
 ```
+
+
+## Version 0.10 : Sort by month and day
+
+```csharp
+public static void AddTransaction()
+{
+    ...
+    numElements++;
+    Sort();
+}
+
+public static void Sort()
+{
+    for (uint i = 0 ; i < numElements - 1 ; i++)
+        for (uint j = i + 1 ; j < numElements ; j++)
+        {
+            if ((transactions[i].months.ToString("00") +
+                    transactions[i].days.ToString("00")).CompareTo(
+                    transactions[j].months.ToString("00") +
+                    transactions[j].days.ToString("00")) > 0 )
+            {
+                Transaction temp = transactions[i];
+                transactions[i] = transactions[j];
+                transactions[j] = temp;
+            }
+        }
+}    
+```

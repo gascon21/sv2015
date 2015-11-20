@@ -7,6 +7,7 @@
    
    Num.   Date        Changes
    ---------------------------------------------------
+   0.09  20-Nov-2015  Support for PNG images, TTF fonts -> Intro screen
    0.08  06-Nov-2015  Level background, using tiles
    0.07  30-Oct-2015  Several birds
    0.06  23-Oct-2015  Optimized data types
@@ -27,9 +28,12 @@ public class Game
         short screenWidth = 800;
         short screenHeight = 600;
         Hardware.Init(screenWidth, screenHeight, 24, fullScreen);
+        Image intro = new Image("data\\intro.png");
+        Font font18;
+
         Image player = new Image("data\\player.bmp");
         Image player2 = new Image("data\\player2.bmp");
-        Image bird = new Image("data\\bird.bmp");
+        Image bird = new Image("data\\bird.png");
 
         Image brick1 = new Image("data\\tileBrick01.bmp");
         Image brick2 = new Image("data\\tileBrick02.bmp");
@@ -83,6 +87,26 @@ public class Game
 
         byte frame = 1;
         bool finished = false;
+
+        font18 = new Font("data/Joystix.ttf", 18);
+
+        // Intro
+        Hardware.ClearScreen();
+        Hardware.DrawHiddenImage(intro, 0, 0);
+        Hardware.WriteHiddenText("Princess of Sanvi",
+                290, 90,
+                0xF0, 0xF0, 0xF0,
+                font18);
+        Hardware.WriteHiddenText( "Press S to Start",
+                310, 500,
+                0xF0, 0xF0, 0xF0,
+                font18);
+
+        Hardware.ShowHiddenScreen();
+        do  // Wait for user to press S (Start)
+        {
+            Hardware.Pause(50);
+        } while (!Hardware.KeyPressed(Hardware.KEY_S));
 
         // Game Loop
         while (! finished)

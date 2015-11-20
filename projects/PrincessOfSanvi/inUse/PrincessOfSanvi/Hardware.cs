@@ -8,7 +8,10 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
-   0.01  30-Oct-2012  Nacho Cabanes
+   0.02  20-Nov-2015  Nacho Cabanes:
+                      "Image" moved to a different file
+                      Support for PNG images, TTF fonts, joystick
+   0.01  30-Oct-2012  Nacho Cabanes:
                       Basic Skeleton hiding SDL
                       Allows only BMP images (no PNG, no JPG,
                         no sound, no TTF, no mouse...)
@@ -23,6 +26,8 @@ public class Hardware
 {
     static IntPtr hiddenScreen;
     static short width, height;
+    static bool isThereJoystick;
+    static IntPtr joystick;
 
 
     public static void Init(short w, short h, int colors, bool fullScreen)
@@ -43,6 +48,21 @@ public class Hardware
         Sdl.SDL_Rect rect2 =
           new Sdl.SDL_Rect(0, 0, (short)width, (short)height);
         Sdl.SDL_SetClipRect(hiddenScreen, ref rect2);
+
+        SdlTtf.TTF_Init();
+
+        // Joystick initialization
+        isThereJoystick = true;
+        if (Sdl.SDL_NumJoysticks() < 1)
+            isThereJoystick = false;
+
+        if (isThereJoystick)
+        {
+            joystick = Sdl.SDL_JoystickOpen(0);
+            if (joystick == IntPtr.Zero)
+                isThereJoystick = false;
+        }
+
     }
 
     public static void ClearScreen()
@@ -54,6 +74,22 @@ public class Hardware
     public static void DrawHiddenImage(Image image, int x, int y)
     {
         drawHiddenImage(image.GetPointer(), x, y);
+    }
+
+    public static void WriteHiddenText(string txt,
+        short x, short y, byte r, byte g, byte b, Font f)
+    {
+        Sdl.SDL_Color color = new Sdl.SDL_Color(r, g, b);
+        IntPtr textoComoImagen = SdlTtf.TTF_RenderText_Solid(
+            f.GetPointer(), txt, color);
+        //if (textoComoImagen == IntPtr.Zero)
+        //   Environment.Exit(5);
+
+        Sdl.SDL_Rect origen = new Sdl.SDL_Rect(0, 0, width, height);
+        Sdl.SDL_Rect dest = new Sdl.SDL_Rect(x, y, width, height);
+
+        Sdl.SDL_BlitSurface(textoComoImagen, ref origen,
+            hiddenScreen, ref dest);
     }
 
     public static void ShowHiddenScreen()
@@ -157,27 +193,3 @@ public class Hardware
 
 } /* End of class SdlHardware */
 
-// ---------------------------------------------------------------
-
-public class Image
-{
-    private IntPtr internalPointer;
-
-    public Image(string fileName)  // Constructor
-    {
-        Load(fileName);
-    }
-
-    public void Load(string fileName)
-    {
-        internalPointer = Sdl.SDL_LoadBMP(fileName);
-        if (internalPointer == IntPtr.Zero)
-            Hardware.FatalError("Image not found: " + fileName);
-    }
-
-
-    public IntPtr GetPointer()
-    {
-        return internalPointer;
-    }
-} /* End of class image */

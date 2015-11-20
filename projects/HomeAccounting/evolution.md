@@ -281,3 +281,29 @@ public static void Sort()
         }
 }    
 ```
+
+## Version 0.11 : Search
+
+```csharp
+public static void Search()
+{
+    Console.Write("Enter your search: ");
+    string search = Console.ReadLine();
+    for (int i = 0; i < numElements; i++)
+    {
+        if (transactions[i].descriptions.ToLower().Contains(search.ToLower()) ||
+            transactions[i].amounts.ToString() == search )
+        {
+            Console.WriteLine(
+            "{0}-{1}-{2}: {3} Euros | {4} (Cat:{5}, Acc:{6})",
+            transactions[i].days.ToString("00"), 
+            transactions[i].months.ToString("00"),
+            transactions[i].years.ToString("0000"),
+            transactions[i].amounts,
+            transactions[i].descriptions,
+            transactions[i].categories, 
+            transactions[i].accounts);
+        }
+    }
+    Console.ReadLine();
+```

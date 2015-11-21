@@ -379,3 +379,35 @@ for(int i=0; i<5; i++)
     bird[i].y = (byte) (bird[i].y + bird[i].vertSpeed);
 }
 ```
+
+
+## Version 0.06a : Functions
+
+```csharp
+const byte SIZE = 5;
+static Sprite player;
+static Sprite[] bird = new Sprite[SIZE];
+static bool finished = false;
+static byte frame = 1;
+
+// Starting values
+public static void Init()
+{
+     player.image.color = ConsoleColor.Red;
+     player.image.symbol = 'A';
+     ...
+
+public static void Main()
+{
+    Init();
+    while ( ! finished )
+    {
+        DrawElements();
+        CheckKeys();
+        MoveElements();
+        CheckCollisions();
+        PauseTillNextFrame();
+    }
+    EndGame();
+}
+```

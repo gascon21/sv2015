@@ -212,3 +212,49 @@ for(int row=0; row<levelHeight; row++)
         }
     }
 ```
+
+
+
+## Version 0.09 : Support for PNG images and TTF fonts
+
+```csharp
+Image intro = new Image("data\\intro.png");
+Font font18;
+...
+font18 = new Font("data/Joystix.ttf", 18);
+// Intro
+Hardware.ClearScreen();
+Hardware.DrawHiddenImage(intro, 0, 0);
+Hardware.WriteHiddenText("Princess of Sanvi",
+        290, 90,
+        0xF0, 0xF0, 0xF0,
+        font18);
+Hardware.WriteHiddenText( "Press S to Start",
+        310, 500,
+        0xF0, 0xF0, 0xF0,
+        font18);
+Hardware.ShowHiddenScreen();
+do  // Wait for user to press S (Start)
+{
+    Hardware.Pause(50);
+} while (!Hardware.KeyPressed(Hardware.KEY_S));
+
+```
+
+
+## Version 0.10 : End screen
+
+```csharp
+...
+    // Pause till next frame (50fps)
+    Hardware.Pause(20);
+}
+Hardware.ClearScreen();
+Hardware.DrawHiddenImage(endScreen,0,0);
+Hardware.WriteHiddenText("Game over",
+    350, 300,
+    0xF0, 0xF0, 0xF0,
+    font18);
+Hardware.ShowHiddenScreen();
+Hardware.Pause(5000);
+```

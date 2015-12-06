@@ -95,13 +95,8 @@ public class MainExam2014
         if (text.Length == 0)
             return false;
             
-        if (text.Length == 1)
-        { 
-            if (text[0] == charSearch)
-                return true;
-            else
-                return false;
-        }
+        if (text[0] == charSearch)
+            return true;
             
         return ContainsR(
             text.Substring(1, text.Length - 1), 

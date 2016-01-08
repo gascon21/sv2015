@@ -52,6 +52,12 @@ namespace DamGame
         {
             if (Hardware.KeyPressed(Hardware.KEY_RIGHT))
                 player.MoveRight();
+            if (Hardware.KeyPressed(Hardware.KEY_LEFT))
+                player.MoveLeft();
+            if (Hardware.KeyPressed(Hardware.KEY_DOWN))
+                player.MoveDown();
+            if (Hardware.KeyPressed(Hardware.KEY_UP))
+                player.MoveUp();
 
             if (Hardware.KeyPressed(Hardware.KEY_ESC))
                 finished = true;
@@ -61,7 +67,8 @@ namespace DamGame
         // Move enemies, animate background, etc 
         public void MoveElements()
         {
-            // TO DO
+            for (int i = 0; i < numEnemies; i++)
+                enemies[i].Move();
         }
 
 

@@ -17,5 +17,20 @@
         {
             x += xSpeed;
         }
+
+        public void MoveLeft()
+        {
+            x -= xSpeed;
+        }
+
+        public void MoveUp()
+        {
+            y -= ySpeed;
+        }
+
+        public void MoveDown()
+        {
+            y += ySpeed;
+        }
     }
 }

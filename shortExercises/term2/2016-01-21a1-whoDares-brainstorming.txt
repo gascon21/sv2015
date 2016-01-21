@@ -1,0 +1,22 @@
+- Player, controlled (moved) by the user
+- Enemies that move randomly and shoot
+- The player shoots. If a shot hits an enemy, they both disappear.
+- The player drops grenades, in a limited number (5 at the start).
+- Each screen is traversed from bottom to top. When the top edge is reached, game advances to the next screen.
+- There are "awards" (boxes with grenades) that can be collected (4 extra grenades). They are part of the map of each screen.
+- There are obstacles (stones, houses) on each screen.
+- After every 5 screens you get to a sixth screen, the final screen in that level. By killing all enemies, you advance to the next level.
+- Player starts with 3 lives. You lose one live each time an enemy shot or grenade impacts you.
+- When the session starts, a loading screen is displayed for 10 seconds and then a welcome screen appears. The game begins when you press fire. At the end of a game (if you lose all lives), the session returns to the welcome screen.
+-------------------------------------
+
+- Jugador, controlado por usuario
+- Enemigos, que se mueven al azar y disparan
+- El jugador dispara. Si un disparo impacta con un enemigo, ambos desaparecen.
+- El jugador lanza bombas, número limitado.
+- Cada pantalla se recorre de abajo a arriba. Al llegar al borde superior se avanza a la siguiente pantalla.
+- Hay "premios" (cajas de bombas) que se pueden recoger (4 bombas más). Son parte del mapa de cada pantalla.
+- En cada pantalla hay obstáculos (piedras, casas).
+- Tras cada 5 pantallas se llega a una sexta pantalla que actúa de pantalla final de ese nivel. Al matar a todos los enemigos, se avanza al nivel siguiente.
+- El jugador parte con 3 vidas. Pierde una cada vez que un disparo o una granada enemigos le impactan.
+- Al comenzar aparece un pantalla de carga durante 10 segundos y luego una pantalla de bienvenida. Al pulsar Disparo comienza una partida. Al final de una partida (si se pierden todas las vidas) se regresa a la pantalla de bienvenida.

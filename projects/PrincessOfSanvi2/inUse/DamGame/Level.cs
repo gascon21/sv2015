@@ -4,13 +4,13 @@
     {
         byte tileWidth, tileHeight;
         byte levelWidth, levelHeight;
+        byte leftMargin, topMargin;
         string[] levelDescription;
 
         Image brick1, brick2, brick3, 
             floor, floorL, floorR, ceiling,
             backB1, backB2, torch1, torch2,
-            pit1, pit2, pit3;
-        Image endScreen = new Image("data\\welcomeText.png");
+            pit1, pit2, pit3, endScreen;
 
         public Level()
         {
@@ -18,6 +18,8 @@
             tileHeight = 53;
             levelWidth = 10;
             levelHeight = 10;
+            leftMargin = 80;
+            topMargin = 50;
             
             // 0 = Empty, 1 = Brick1, 2 = Brick2, 3 = Brick3, 4 = Normal floor
             // 5 = Floor left, 6= right, 7 = Ceiling
@@ -52,18 +54,16 @@
             pit1 = new Image("data\\tilePit01.png");
             pit2 = new Image("data\\tilePit02.png");
             pit3 = new Image("data\\tilePit03.png");
+            endScreen = new Image("data\\welcomeText.png");
         }
 
         public void DrawOnHiddenScreen()
         {
-            // Draw elements on screen
-            Hardware.ClearScreen();
-
             for (int row = 0; row < levelHeight; row++)
                 for (int col = 0; col < levelWidth; col++)
                 {
-                    int xPos = col * tileWidth;
-                    int yPos = row * tileHeight;
+                    int xPos = leftMargin + col * tileWidth;
+                    int yPos = topMargin + row * tileHeight;
                     switch (levelDescription[row][col])
                     {
                         case '1': Hardware.DrawHiddenImage(brick1, xPos, yPos); break;

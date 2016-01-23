@@ -13,9 +13,12 @@
             height = 64;
         }
 
-        public void Move()
+        public override void Move()
         {
-            // TO DO
+            // TO DO: Avoid magic numbers
+            if ((x > 1024 - width) || (x < 0))
+                xSpeed = -xSpeed;
+            x = (short)(x + xSpeed);
         }
     }
 }

@@ -50,7 +50,12 @@ namespace DamGame
         // Check input by the user
         public void CheckKeys()
         {
-            if (Hardware.KeyPressed(Hardware.KEY_RIGHT))
+            if ((Hardware.KeyPressed(Hardware.KEY_RIGHT))
+                    && (currentLevel.IsValidMove(
+                        player.GetX() + player.GetSpeedX(), 
+                        player.GetY(), 
+                        player.GetX() + player.GetWidth() + player.GetSpeedX(), 
+                        player.GetY() + player.GetHeight())))
                 player.MoveRight();
             if (Hardware.KeyPressed(Hardware.KEY_LEFT))
                 player.MoveLeft();

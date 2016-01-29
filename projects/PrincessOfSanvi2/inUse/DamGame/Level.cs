@@ -86,7 +86,19 @@
 
         public bool IsValidMove(int xMin, int yMin, int xMax, int yMax)
         {
-            // TO DO
+            
+            // Bottom right corner
+            int tileXMax = (xMax - leftMargin) / tileWidth;
+            int tileYMax = (yMax - topMargin) / tileHeight;
+            char currentTile = levelDescription[tileYMax][tileXMax];
+            // Note: if you need to debug, you can add:
+            // System.Console.WriteLine(tileXMax+" "+tileYMax+": "+currentTile);
+            if ((currentTile == '1') || (currentTile == '2') || (currentTile == '3')
+                     || (currentTile == '<') || (currentTile == '-') || (currentTile == '>'))
+                return false;
+
+            // TO DO : Check other possible tiles and other corners
+
             return true;
         }
     }

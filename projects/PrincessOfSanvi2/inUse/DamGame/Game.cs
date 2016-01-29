@@ -57,11 +57,29 @@ namespace DamGame
                         player.GetX() + player.GetWidth() + player.GetSpeedX(), 
                         player.GetY() + player.GetHeight())))
                 player.MoveRight();
-            if (Hardware.KeyPressed(Hardware.KEY_LEFT))
+
+            if ((Hardware.KeyPressed(Hardware.KEY_LEFT))
+                && (currentLevel.IsValidMove(
+                        player.GetX() - player.GetSpeedX(),
+                        player.GetY(),
+                        player.GetX() + player.GetWidth() - player.GetSpeedX(),
+                        player.GetY() + player.GetHeight())))
                 player.MoveLeft();
-            if (Hardware.KeyPressed(Hardware.KEY_DOWN))
+
+            if ((Hardware.KeyPressed(Hardware.KEY_DOWN))
+                 && (currentLevel.IsValidMove(
+                        player.GetX(),
+                        player.GetY() + player.GetSpeedY(),
+                        player.GetX() + player.GetWidth(),
+                        player.GetY() + player.GetHeight() + player.GetSpeedY())))
                 player.MoveDown();
-            if (Hardware.KeyPressed(Hardware.KEY_UP))
+
+            if ((Hardware.KeyPressed(Hardware.KEY_UP))
+                && (currentLevel.IsValidMove(
+                        player.GetX(),
+                        player.GetY() - player.GetSpeedY(),
+                        player.GetX() + player.GetWidth(),
+                        player.GetY() + player.GetHeight() - player.GetSpeedY())))
                 player.MoveUp();
 
             if (Hardware.KeyPressed(Hardware.KEY_ESC))

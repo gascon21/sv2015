@@ -80,7 +80,9 @@ namespace DamGame
         // Check collisions and apply game logic
         public void CheckCollisions()
         {
-            // TO DO
+            for (int i = 0; i < numEnemies; i++)
+                if (enemies[i].CollisionsWith(player))
+                    finished = true;
         }
 
         public void PauseTillNextFrame()

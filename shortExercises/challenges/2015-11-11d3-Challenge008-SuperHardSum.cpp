@@ -46,10 +46,10 @@ int main()
             words.push_back(part);
             
         // And finally sum the numbers
-        long sum = 0;
+        long long sum = 0;
         for(unsigned int i= 0; i < words.size(); i++)
         {
-            sum += atol(words[i].c_str());
+            sum += atoll(words[i].c_str());
         }
         cout << sum << endl;
     }

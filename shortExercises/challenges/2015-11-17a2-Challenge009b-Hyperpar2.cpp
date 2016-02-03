@@ -1,4 +1,3 @@
-// David Gascón López
 // Challenge 009
 /*
 Se dice que un número es hyperpar cuando todos sus dígitos son pares. 
@@ -28,28 +27,29 @@ SI
 https://www.aceptaelreto.com/problem/statement.php?id=165
 */
 
-using System;
-public class Challenge009
+#include <iostream>
+using namespace std;
+ 
+int main() 
 {
-    public static void Main()
+    string num;
+    do
     {
-        string num;
-        do
+        bool hyperpar = true;
+        cin >> num;
+        
+        if(num[0] != '-')
         {
-            bool hyperpar = true;
-            num = Console.ReadLine();
-            
-            if(num[0] != '-')
-            {
-                for(int i = 0 ; i < num.Length ; i ++)
-                    if(num[i] % 2 != 0)
-                        hyperpar = false;
-                if(hyperpar)
-                    Console.WriteLine("SI");
-                else
-                    Console.WriteLine("NO");
-            }
+            for(unsigned int i = 0 ; i < num.length() ; i ++)
+                if(num[i] % 2 != 0)
+                    hyperpar = false;
+            if(hyperpar)
+                cout << "SI" << endl;
+            else
+                cout << "NO" << endl;
         }
-        while(num[0] != '-');
-    }   
+    }
+    while(num[0] != '-');
+
+    return 0;
 }

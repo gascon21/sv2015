@@ -7,10 +7,10 @@
             LoadImage("data/bird.png");
             x = newX;
             y = newY;
-            xSpeed = 8;
-            ySpeed = 8;
-            width = 64;
-            height = 64;
+            xSpeed = 3;
+            ySpeed = 3;
+            width = 48;
+            height = 48;
         }
 
         public override void Move()

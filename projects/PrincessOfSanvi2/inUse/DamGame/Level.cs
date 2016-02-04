@@ -15,7 +15,7 @@
         public Level()
         {
             tileWidth = 80;
-            tileHeight = 53;
+            tileHeight = 64;
             levelWidth = 10;
             levelHeight = 10;
             leftMargin = 80;
@@ -86,21 +86,27 @@
 
         public bool IsValidMove(int xMin, int yMin, int xMax, int yMax)
         {
-            
-            // Bottom right corner
-            int tileXMax = (xMax - leftMargin) / tileWidth;
-            int tileYMax = (yMax - topMargin) / tileHeight;
-            char currentTile = levelDescription[tileYMax][tileXMax];
-            // Note: if you need to debug, you can add:
-            // System.Console.WriteLine(tileXMax+" "+tileYMax+": "+currentTile);
-            if ((currentTile == '1') || (currentTile == '2') || (currentTile == '3')
-                     || (currentTile == '<') || (currentTile == '-') || (currentTile == '>')
-                     || (currentTile == '$') || (currentTile == '%') || (currentTile == '&')
-                     || (currentTile == '_') )
-                return false;
+            for (int row = 0; row < levelHeight; row++)
+                for (int col = 0; col < levelWidth; col++)
+                {
+                    char tileType = levelDescription[row][col];
+                    // If we don't need to check collisions with this tile, we skip it
+                    if ((tileType == ' ')  // Empty space
+                            || (tileType == '.') || (tileType == ',')  // Bricks in the back
+                            || (tileType == 'v') || (tileType == '^')) // Torches
+                        continue;
+                    // Otherwise, lets calculate its corners and check rectangular collisions
+                    int xPos = leftMargin + col * tileWidth;
+                    int yPos = topMargin + row * tileHeight;
+                    int xLimit = leftMargin + (col+1) * tileWidth;
+                    int yLimit = topMargin + (row+1) * tileHeight;
 
-            // TO DO : Check other possible tiles and other corners
-
+                    if (Sprite.CheckCollisions(
+                            xMin, yMin, xMax, yMax,  // Coords of the sprite
+                            xPos, yPos, xLimit, yLimit)) // Coords of current tile
+                        return false;
+                    }
+            // If we have not collided with anything... then we can move
             return true;
         }
     }

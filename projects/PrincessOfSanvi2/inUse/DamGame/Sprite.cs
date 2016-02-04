@@ -194,6 +194,23 @@ class Sprite
         return false;
     }
 
+
+    // Check collisions between two rectangles
+    public static bool CheckCollisions(
+        int r1xStart, int r1yStart, int r1xEnd, int r1yEnd,
+        int r2xStart, int r2yStart, int r2xEnd, int r2yEnd)
+    {
+        if ((r2xStart < r1xEnd) &&
+                (r2xEnd > r1xStart) &&
+                (r2yStart < r1yEnd) &&
+                (r2yEnd > r1yStart)
+                )
+            return true;
+        else
+            return false;
+    }
+
+
     public void Restart()
     {
         x = startX;

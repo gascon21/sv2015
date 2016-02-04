@@ -7,10 +7,10 @@
             LoadImage("data/player.png");
             x = 50;
             y = 120;
-            xSpeed = 8;
-            ySpeed = 8;
-            width = 32;
-            height = 64;
+            xSpeed = 4;
+            ySpeed = 4;
+            width = 50;
+            height = 107;
         }
 
         public void MoveRight()

@@ -2,8 +2,6 @@
 {
     class Enemy : Sprite
     {
-        protected int stepsTillNextFrame;
-        protected int currentStep;
         public Enemy(int newX, int newY)
         {
             LoadSequence(LEFT, 
@@ -18,7 +16,6 @@
             width = 48;
             height = 48;
             stepsTillNextFrame = 5;
-            currentStep = 0;
         }
 
         public override void Move()
@@ -32,13 +29,8 @@
                 ChangeDirection(LEFT);
             else
                 ChangeDirection(RIGHT);
-
-            currentStep++;
-            if (currentStep >= stepsTillNextFrame)
-            {
-                currentStep = 0;
-                NextFrame();
-            }
+            
+            NextFrame();
         }
     }
 }

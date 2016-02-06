@@ -18,6 +18,9 @@ class Sprite
     protected bool containsSequence;
     protected int currentFrame;
 
+    protected int stepsTillNextFrame;
+    protected int currentStep;
+
     protected byte numDirections = 11;
     protected byte currentDirection;
     public const byte RIGHT = 0;
@@ -41,6 +44,9 @@ class Sprite
         visible = true;
         sequence = new Image[numDirections][];
         currentDirection = RIGHT;
+
+        stepsTillNextFrame = 1;
+        currentStep = 0;
     }
 
     public Sprite(string imageName)
@@ -155,11 +161,16 @@ class Sprite
             Hardware.DrawHiddenImage(image, x, y);
     }
 
-    public void NextFrame()
+    public virtual void NextFrame()
     {
-        currentFrame++;
-        if (currentFrame >= sequence[currentDirection].Length)
-            currentFrame = 0;
+        currentStep++;
+        if (currentStep >= stepsTillNextFrame)
+        {
+            currentStep = 0;
+            currentFrame++;
+            if (currentFrame >= sequence[currentDirection].Length)
+                currentFrame = 0;
+        }
     }
         
     public void ChangeDirection(byte newDirection)

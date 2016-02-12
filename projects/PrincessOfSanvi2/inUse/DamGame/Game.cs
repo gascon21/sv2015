@@ -14,7 +14,7 @@ namespace DamGame
         public Game()
         {
             font18 = new Font("data/Joystix.ttf", 18);
-            player = new Player();
+            player = new Player(this);
 
             Random rnd = new Random();
             numEnemies = 2;
@@ -50,37 +50,25 @@ namespace DamGame
         // Check input by the user
         public void CheckKeys()
         {
-            if ((Hardware.KeyPressed(Hardware.KEY_RIGHT))
-                    && (currentLevel.IsValidMove(
-                        player.GetX() + player.GetSpeedX(), 
-                        player.GetY(), 
-                        player.GetX() + player.GetWidth() + player.GetSpeedX(), 
-                        player.GetY() + player.GetHeight())))
+            if (Hardware.KeyPressed(Hardware.KEY_UP))
+            {
+                if (Hardware.KeyPressed(Hardware.KEY_RIGHT))
+                    player.JumpRight();
+                else
+                if (Hardware.KeyPressed(Hardware.KEY_LEFT))
+                    player.JumpLeft();
+                else
+                    player.Jump();
+            }
+
+            else if (Hardware.KeyPressed(Hardware.KEY_RIGHT))
                 player.MoveRight();
 
-            if ((Hardware.KeyPressed(Hardware.KEY_LEFT))
-                && (currentLevel.IsValidMove(
-                        player.GetX() - player.GetSpeedX(),
-                        player.GetY(),
-                        player.GetX() + player.GetWidth() - player.GetSpeedX(),
-                        player.GetY() + player.GetHeight())))
+            else if (Hardware.KeyPressed(Hardware.KEY_LEFT))
                 player.MoveLeft();
 
-            if ((Hardware.KeyPressed(Hardware.KEY_DOWN))
-                 && (currentLevel.IsValidMove(
-                        player.GetX(),
-                        player.GetY() + player.GetSpeedY(),
-                        player.GetX() + player.GetWidth(),
-                        player.GetY() + player.GetHeight() + player.GetSpeedY())))
-                player.MoveDown();
-
-            if ((Hardware.KeyPressed(Hardware.KEY_UP))
-                && (currentLevel.IsValidMove(
-                        player.GetX(),
-                        player.GetY() - player.GetSpeedY(),
-                        player.GetX() + player.GetWidth(),
-                        player.GetY() + player.GetHeight() - player.GetSpeedY())))
-                player.MoveUp();
+            //if (Hardware.KeyPressed(Hardware.KEY_DOWN))
+            //    player.MoveDown();
 
             if (Hardware.KeyPressed(Hardware.KEY_ESC))
                 finished = true;
@@ -90,6 +78,7 @@ namespace DamGame
         // Move enemies, animate background, etc 
         public void MoveElements()
         {
+            player.Move();
             for (int i = 0; i < numEnemies; i++)
                 enemies[i].Move();
         }
@@ -120,6 +109,11 @@ namespace DamGame
                 CheckCollisions();
                 PauseTillNextFrame();
             }
+        }
+
+        public bool IsValidMove(int xMin, int yMin, int xMax, int yMax)
+        {
+            return currentLevel.IsValidMove(xMin, yMin, xMax, yMax);
         }
     }
 }

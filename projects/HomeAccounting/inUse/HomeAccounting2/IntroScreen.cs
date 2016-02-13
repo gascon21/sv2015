@@ -9,7 +9,10 @@
    Num.   Date        By / Changes
    ---------------------------------------------------
    0.12  12-Feb-2016  Nacho: Almost empty skeleton
+   0.13  12-Feb-2016  Pablo and adrian: IntroScreen
  ---------------------------------------------------- */
+
+using System;
 
 namespace HomeAccounting2
 {
@@ -17,7 +20,22 @@ namespace HomeAccounting2
     {
         public void Show()
         {
-            // TO DO
+            //Title
+            Console.WriteLine("##      ##  ########  ##         ######    #######   ##     ##  ########");
+            Console.WriteLine("##  ##  ##  ##        ##        ##    ##  ##     ##  ###   ###  ##      ");
+            Console.WriteLine("##  ##  ##  ##        ##        ##        ##     ##  #### ####  ##      ");
+            Console.WriteLine("##  ##  ##  ######    ##        ##        ##     ##  ## ### ##  ######  ");
+            Console.WriteLine("##  ##  ##  ##        ##        ##        ##     ##  ##     ##  ##      ");
+            Console.WriteLine("##  ##  ##  ##        ##        ##    ##  ##     ##  ##     ##  ##      ");
+            Console.WriteLine(" ###  ###   ########  ########   ######    #######   ##     ##  ########");
+            //Message
+            Console.WriteLine();
+            for (int i = 0; i < 22; i++)
+                Console.Write(" ");
+            Console.WriteLine("Welcome to Home Accounting");
+            for (int i = 0; i < 10; i++)
+                Console.Write(" ");
+            Console.WriteLine("This program will help you manage your expenses and incomes"); 
         }
     }
 }

@@ -8,6 +8,9 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
+   0.13  12-Feb-2016  Pedro Perez, Jose Muñoz, Vicente Cuenca
+                        Improvements towards use of classes. Not finished.
+                      Ruben Blanco: Load and save config (only language, so far)
    0.12  12-Feb-2016  Nacho: Part of a project. "struct" turned into "class" (still public attributes)
    0.11  20-Nov-2015  Sacha Van de Sijpe: Search
    0.10  20-Nov-2015  David Gascón: Sort by month and day
@@ -23,6 +26,7 @@
  ---------------------------------------------------- */
 
 using System;
+using System.IO;
 
 namespace HomeAccounting2
 {
@@ -147,7 +151,6 @@ namespace HomeAccounting2
             Console.ReadLine();
         }
 
-
         public static void Search()
         {
             Console.Write("Enter your search: ");
@@ -177,9 +180,27 @@ namespace HomeAccounting2
             Console.WriteLine("Option not available");
         }
 
+        public static string LoadConfig()
+        {
+            if (!File.Exists("language.conf"))
+                return "en";
+            StreamReader myFile = File.OpenText("language.conf");
+            string language = myFile.ReadLine();
+            myFile.Close();
+            return language;
+        }
+        
+        public static void SaveConfig(string language)
+        {
+            StreamWriter newFile = File.CreateText("language.conf");
+            newFile.WriteLine(language);
+            newFile.Close();
+        }
+
 
         public static void Main()
         {
+            string language = LoadConfig();
             char option;
             do
             {

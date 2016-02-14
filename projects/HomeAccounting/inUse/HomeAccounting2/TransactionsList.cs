@@ -8,31 +8,34 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
-   0.12  12-Feb-2016  Nacho: Empty skeleton
+   0.14  13-Feb-2016  Nacho: Save & Load Enabled. Sort brought from Main 
+                        & called after Add; prototype for a few new methods
    0.13  12-Feb-2016  Chen Chao, Sergio Martínez, Gonzalo García: Added basic methods
+   0.12  12-Feb-2016  Nacho: Empty skeleton
  ---------------------------------------------------- */
 
- using System;
-using System.Collections;
+using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace HomeAccounting2
 {
-    class TransactionsList
+    public class TransactionsList
     {
-        protected ArrayList transactions;
+        protected List<Transaction> transactions;
 
         // This constructor creates a new arraylist of transaction.
         public TransactionsList()
         {
-            transactions = new ArrayList(); 
+            transactions = new List<Transaction>(); 
         }
 
 
         // This method adds a new transaction.
         public void Add(Transaction newtransaction)
         {
-            transactions.Add(newtransaction);     
+            transactions.Add(newtransaction);
+            transactions.Sort();
         }
 
 
@@ -49,14 +52,14 @@ namespace HomeAccounting2
         // This method returns a transaction at a certain position.
         public Transaction Get(int position)
         {
-            return (Transaction) transactions[position];
+            return transactions[position];
         }
 
 
         // This method returns the last transaction added.
         public Transaction GetLast()
         {
-            return (Transaction)transactions[Count() - 1];
+            return transactions[Count() - 1];
         }
 
 
@@ -67,7 +70,7 @@ namespace HomeAccounting2
         }  
 
         
-        public string[] GetResult(byte month, ushort year)
+        public string[] GetDataInAMonthAsText(byte month, ushort year)
         {
             /*
             ArrayList transactionsByMonthYear = new ArrayList();
@@ -95,8 +98,37 @@ namespace HomeAccounting2
             */
             return null;
         }
-        
-        
+
+        public string[] GetLastDataAsText(short amount)
+        {
+            // TO DO
+            return null;
+        }
+
+        public string[] GetSearchResultsAsText(string searchText)
+        {
+            // TO DO
+            return null;
+        }
+
+        public void Sort()
+        {
+            for (int i = 0; i < Count() - 1; i++)
+                for (int j = i + 1; j < Count(); j++)
+                {
+                    if ((transactions[i].GetMonth().ToString("00") +
+                            transactions[i].GetDay().ToString("00")).CompareTo(
+                            transactions[j].GetMonth().ToString("00") +
+                            transactions[j].GetDay().ToString("00")) > 0)
+                    {
+                        Transaction temp = transactions[i];
+                        transactions[i] = transactions[j];
+                        transactions[j] = temp;
+                    }
+                }
+        }
+
+
         public void Load()
         {
             string line;
@@ -107,13 +139,11 @@ namespace HomeAccounting2
                 if (line != null)
                 {
                     string[] data = line.Split('|');
-                    /*
                     Add( new Transaction(Convert.ToByte(data[0]), 
                         Convert.ToByte(data[1]), 
                         Convert.ToUInt16(data[2]), 
                         Convert.ToDouble(data[3]), 
                         data[4], data[5], data[6]));
-                    */
                 }
             } 
             while (line != null);
@@ -124,13 +154,14 @@ namespace HomeAccounting2
         public void Save()
         {
             StreamWriter dataFile = File.CreateText("data.dat");
-            /*
             for (int i = 0; i < transactions.Count; i++)
-                configFile.WriteLine(transactions[i].GetDays() + "|" + transactions[i].GetMonths
-                    + "|" + transactions[i].GetYears + "|" + transactions[i].GetAmounts
-                        + "|" + transactions[i].GetDescriptions + "|" + transactions[i].GetAccounts
-                            + "|" + transactions[i].GetCategories);
-            */        
+                dataFile.WriteLine(transactions[i].GetDay() + "|" + 
+                    transactions[i].GetMonth() + "|" + 
+                    transactions[i].GetYear() + "|" + 
+                    transactions[i].GetAmount() + "|" + 
+                    transactions[i].GetDescription() + "|" + 
+                    transactions[i].GetAccount() + "|" + 
+                    transactions[i].GetCategory());
             dataFile.Close();
         }
  

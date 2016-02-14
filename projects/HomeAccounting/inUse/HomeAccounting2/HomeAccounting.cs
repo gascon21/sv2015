@@ -8,6 +8,8 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
+   0.14  13-Feb-2016  Nacho: Add works, commented out the parts to be moved to TransactionList,
+                        Xxx
    0.13  12-Feb-2016  Pedro Perez, Jose Muñoz, Vicente Cuenca
                         Improvements towards use of classes. Not finished.
                       Ruben Blanco: Load and save config (only language, so far)
@@ -32,12 +34,9 @@ namespace HomeAccounting2
 {
     public class HomeAccounting
     {
-        const int SIZE = 100000;
-        static Transaction[] transactions = new Transaction[SIZE];
-        static uint numElements = 0;
+        protected TransactionsList transactions;
 
-
-        public static void DisplayMenu()
+        public void DisplayMenu()
         {
             Console.Clear();
             Console.WriteLine("1.-Add expense or income");
@@ -49,69 +48,46 @@ namespace HomeAccounting2
         }
 
 
-        public static char GetOption()
+        public char GetOption()
         {
             Console.WriteLine("Choose an option: ");
             return Console.ReadKey().KeyChar;
         }
 
 
-        public static void AddTransaction()
+        public void AddTransaction()
         {
             Console.WriteLine();
             Console.WriteLine("Enter the amount:");
-            transactions[numElements].amounts =
-                Convert.ToDouble(Console.ReadLine());
+            double amount = Convert.ToDouble(Console.ReadLine());
 
             Console.WriteLine("Enter the description:");
-            transactions[numElements].descriptions =
-                Console.ReadLine();
+            string description = Console.ReadLine();
 
             Console.WriteLine("Enter the day:");
-            transactions[numElements].days =
-                Convert.ToByte(Console.ReadLine());
+            byte day = Convert.ToByte(Console.ReadLine());
 
             Console.WriteLine("Enter the month:");
-            transactions[numElements].months =
-                Convert.ToByte(Console.ReadLine());
+            byte month = Convert.ToByte(Console.ReadLine());
 
             Console.WriteLine("Enter the year:");
-            transactions[numElements].years =
-                Convert.ToUInt16(Console.ReadLine());
+            ushort year = Convert.ToUInt16(Console.ReadLine());
 
             Console.WriteLine("Enter the account:");
-            transactions[numElements].accounts =
-                Console.ReadLine();
+            string account = Console.ReadLine();
 
             Console.WriteLine("Enter the category:");
-            transactions[numElements].categories =
-                Console.ReadLine();
+            string category = Console.ReadLine();
 
-            numElements++;
-            Sort();
+            transactions.Add(new Transaction(day, month, year, amount,
+                description, account, category));
         }
 
 
-        public static void Sort()
+        public void ViewLastTransactions()
         {
-            for (uint i = 0; i < numElements - 1; i++)
-                for (uint j = i + 1; j < numElements; j++)
-                {
-                    if ((transactions[i].months.ToString("00") +
-                            transactions[i].days.ToString("00")).CompareTo(
-                            transactions[j].months.ToString("00") +
-                            transactions[j].days.ToString("00")) > 0)
-                    {
-                        Transaction temp = transactions[i];
-                        transactions[i] = transactions[j];
-                        transactions[j] = temp;
-                    }
-                }
-        }
-
-
-        public static void ViewLastTransactions()
-        {
+            /* TO DO: Ask TransactionsList for the info */
+            /*
             for (uint i = 0; i < numElements; i++)
                 Console.WriteLine("{0}-{1}-{2}: {3} Euros | {4} (Cat:{5}, Acc:{6})",
                     transactions[i].days.ToString("00"),
@@ -122,10 +98,11 @@ namespace HomeAccounting2
                     transactions[i].categories,
                     transactions[i].accounts);
             Console.ReadLine();
+            */
         }
 
 
-        public static void ViewTransactionsMonth()
+        public void ViewTransactionsInAMonth()
         {
             ushort searchyear;
             byte searchmonth;
@@ -133,7 +110,8 @@ namespace HomeAccounting2
             searchyear = Convert.ToUInt16(Console.ReadLine());
             Console.Write("Enter the month: ");
             searchmonth = Convert.ToByte(Console.ReadLine());
-
+            /* TO DO: Ask TransactionsList for the info */
+            /*
             for (uint i = 0; i < numElements; i++)
             {
                 if (transactions[i].years == searchyear &&
@@ -149,12 +127,15 @@ namespace HomeAccounting2
                         transactions[i].accounts);
             }
             Console.ReadLine();
+            */
         }
 
-        public static void Search()
+        public void Search()
         {
             Console.Write("Enter your search: ");
             string search = Console.ReadLine();
+            /* TO DO: Ask TransactionsList for the info */
+            /*
             for (int i = 0; i < numElements; i++)
             {
                 if (transactions[i].descriptions.ToLower().Contains(search.ToLower()) ||
@@ -172,6 +153,7 @@ namespace HomeAccounting2
                 }
             }
             Console.ReadLine();
+            */
         }
 
 
@@ -189,7 +171,7 @@ namespace HomeAccounting2
             myFile.Close();
             return language;
         }
-        
+
         public static void SaveConfig(string language)
         {
             StreamWriter newFile = File.CreateText("language.conf");
@@ -198,7 +180,7 @@ namespace HomeAccounting2
         }
 
 
-        public static void Main()
+        public void Run()
         {
             string language = LoadConfig();
             char option;
@@ -221,7 +203,7 @@ namespace HomeAccounting2
                         break;
 
                     case '3':
-                        ViewTransactionsMonth();
+                        ViewTransactionsInAMonth();
                         break;
 
                     case '4':
@@ -239,6 +221,14 @@ namespace HomeAccounting2
             }
             while (option != '0');
         }
-    }
 
+        // -----------------------------------------
+
+        public static void Main()
+        {
+            HomeAccounting accounting = new HomeAccounting();
+            accounting.Run();
+        }
+
+    }
 }

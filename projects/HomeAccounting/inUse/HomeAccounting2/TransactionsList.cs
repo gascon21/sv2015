@@ -8,6 +8,7 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
+   0.15  18-Feb-2016  Nacho: Skeleton for GetLastDataAsText
    0.14  13-Feb-2016  Nacho: Save & Load Enabled. Sort brought from Main 
                         & called after Add; prototype for a few new methods
    0.13  12-Feb-2016  Chen Chao, Sergio Martínez, Gonzalo García: Added basic methods
@@ -101,8 +102,15 @@ namespace HomeAccounting2
 
         public string[] GetLastDataAsText(short amount)
         {
-            // TO DO
-            return null;
+            string[] data;
+            // TO DO: Return "amount" data, instead of 1
+            data = new string[1];
+            if (Count() > 0)
+                data[0] = Get(0).ToString();
+            else
+                data[0] = "No data";
+            
+            return data;
         }
 
         public string[] GetSearchResultsAsText(string searchText)

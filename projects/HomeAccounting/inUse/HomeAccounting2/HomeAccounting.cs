@@ -8,8 +8,10 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
-   0.14  13-Feb-2016  Nacho: Add works, commented out the parts to be moved to TransactionList,
-                        Xxx
+   0.15  18-Feb-2016  Nacho: Skeleton for ViewLastTransactions, ShowWithNoScroll
+                        Example of use of "Translator" in "DisplayMenu"
+   0.14  13-Feb-2016  Nacho: Uses "TransactionList" instead of an array, methods are not static,
+                        commented out the parts to be moved to TransactionList.
    0.13  12-Feb-2016  Pedro Perez, Jose Muñoz, Vicente Cuenca
                         Improvements towards use of classes. Not finished.
                       Ruben Blanco: Load and save config (only language, so far)
@@ -35,11 +37,18 @@ namespace HomeAccounting2
     public class HomeAccounting
     {
         protected TransactionsList transactions;
+        protected string language;
+
+        public HomeAccounting()
+        {
+            transactions = new TransactionsList();
+            language = "en";
+        }
 
         public void DisplayMenu()
         {
             Console.Clear();
-            Console.WriteLine("1.-Add expense or income");
+            Console.WriteLine("1.-" + Translator.GetTranslation(language,"addtr"));
             Console.WriteLine("2.-View last Transactions");
             Console.WriteLine("3.-Monthly Transactions");
             Console.WriteLine("4.-Account totals");
@@ -50,7 +59,7 @@ namespace HomeAccounting2
 
         public char GetOption()
         {
-            Console.WriteLine("Choose an option: ");
+            Console.Write("Choose an option: ");
             return Console.ReadKey().KeyChar;
         }
 
@@ -86,19 +95,7 @@ namespace HomeAccounting2
 
         public void ViewLastTransactions()
         {
-            /* TO DO: Ask TransactionsList for the info */
-            /*
-            for (uint i = 0; i < numElements; i++)
-                Console.WriteLine("{0}-{1}-{2}: {3} Euros | {4} (Cat:{5}, Acc:{6})",
-                    transactions[i].days.ToString("00"),
-                    transactions[i].months.ToString("00"),
-                    transactions[i].years.ToString("0000"),
-                    transactions[i].amounts,
-                    transactions[i].descriptions,
-                    transactions[i].categories,
-                    transactions[i].accounts);
-            Console.ReadLine();
-            */
+            ShowWithNoScroll( transactions.GetLastDataAsText(20) );
         }
 
 
@@ -220,6 +217,18 @@ namespace HomeAccounting2
                 }
             }
             while (option != '0');
+        }
+
+        private void ShowWithNoScroll(string[] data)
+        {
+            // TO DO: Complete, so that it shows the first 20 lines
+            if ((data != null) && (data.Length > 0))
+            {
+                Console.Clear();
+                Console.WriteLine(data[0]);
+            }
+            Console.Write("Press a key to return ");
+            Console.ReadKey();
         }
 
         // -----------------------------------------

@@ -18,11 +18,11 @@ public class CopyPasteBlocks
         FileStream myFile2 = File.Create(fileName2);
         
         int blockSize = 100 * 1024 * 1024;
-		int numBlocks = myFile.Length / blockSize;
-		if (myFile.Length % blockSize != 0)
-			numBlocks++;
-		
-		byte[] myArray = new byte[blockSize];
+        int numBlocks = (int) myFile.Length / blockSize;
+        if (myFile.Length % blockSize != 0)
+            numBlocks++;
+        
+        byte[] myArray = new byte[blockSize];
         
         for(int i = 0 ; i < numBlocks ; i++)
         {

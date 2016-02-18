@@ -18,14 +18,15 @@ public class CopyPasteBlocks
         FileStream myFile2 = File.Create(fileName2);
         
         int blockSize = 100 * 1024 * 1024;
-		byte[] myArray = new byte[blockSize];
+        byte[] myArray = new byte[blockSize];
         
+        int readBytes;
         do
         {
-            int readBytes = myFile.Read(myArray, 0, blockSize);
+            readBytes = myFile.Read(myArray, 0, blockSize);
             myFile2.Write(myArray, 0, readBytes);
         }
-		while( readBytes == blockSize);
+        while( readBytes == blockSize);
         
         myFile.Close();
         myFile2.Close();

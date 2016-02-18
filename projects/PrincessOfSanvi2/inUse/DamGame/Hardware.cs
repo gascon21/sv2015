@@ -28,6 +28,7 @@ public class Hardware
     static short width, height;
     static bool isThereJoystick;
     static IntPtr joystick;
+    static short startX, startY; // For Scroll
 
 
     public static void Init(short w, short h, int colors, bool fullScreen)
@@ -73,7 +74,7 @@ public class Hardware
 
     public static void DrawHiddenImage(Image image, int x, int y)
     {
-        drawHiddenImage(image.GetPointer(), x, y);
+        drawHiddenImage(image.GetPointer(), x + startX, y + startY);
     }
 
     public static void WriteHiddenText(string txt,
@@ -86,7 +87,9 @@ public class Hardware
         //   Environment.Exit(5);
 
         Sdl.SDL_Rect origen = new Sdl.SDL_Rect(0, 0, width, height);
-        Sdl.SDL_Rect dest = new Sdl.SDL_Rect(x, y, width, height);
+        Sdl.SDL_Rect dest = new Sdl.SDL_Rect(
+            (short)(x + startX), (short)(y + startY),
+            width, height);
 
         Sdl.SDL_BlitSurface(textoComoImagen, ref origen,
             hiddenScreen, ref dest);
@@ -132,6 +135,29 @@ public class Hardware
         sw.Close();
         Console.WriteLine(text);
         Environment.Exit(1);
+    }
+
+    // Scroll Methods
+
+    public static void ResetScroll()
+    {
+        startX = startY = 0;
+    }
+
+    public static void ScrollTo(short newStartX, short newStartY)
+    {
+        startX = newStartX;
+        startY = newStartY;
+    }
+
+    public static void ScrollHorizontally(short xDespl)
+    {
+        startX += xDespl;
+    }
+
+    public static void ScrollVertically(short yDespl)
+    {
+        startY += yDespl;
     }
 
     // Private (auxiliar) methods

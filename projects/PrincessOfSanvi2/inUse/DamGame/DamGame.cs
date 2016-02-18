@@ -13,6 +13,12 @@
                 WelcomeScreen welcome = new WelcomeScreen();
                 welcome.Run();
 
+                if (welcome.GetOptionChosen() == WelcomeScreen.options.Credits)
+                {
+                    CreditsScreen credits = new CreditsScreen();
+                    credits.Run();
+                }
+
                 if (welcome.GetOptionChosen() == WelcomeScreen.options.Play)
                 {
                     Game myGame = new Game();

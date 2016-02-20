@@ -1,3 +1,6 @@
+// 0.02 19-feb-2016 Chen Chao, Carla Liarte Felipe, Adrian Navarro García:
+//                  Modified checkcollisions
+
 using System;
 using System.Threading;
 
@@ -48,7 +51,7 @@ public class Game
             }
 
             if (((key.KeyChar == '6') || (key.Key == ConsoleKey.RightArrow))
-                    && (player.GetX() < 79))
+                    && (player.GetX() + player.GetWidth() < 79))
             {
                 player.MoveRight();
             }
@@ -60,7 +63,7 @@ public class Game
             }
 
             if (((key.KeyChar == '2') || (key.Key == ConsoleKey.DownArrow))
-                    && (player.GetY() < 24))
+                    && (player.GetY() + player.GetHeight() < 24))
             {
                 player.MoveDown();
             }
@@ -79,8 +82,7 @@ public class Game
     public  void CheckCollisions()
     {
         for (int i = 0; i < 5; i++)
-            if ((bird[i].GetX() == player.GetX()) 
-                    && (bird[i].GetY() == player.GetY()))
+            if (bird[i].CollisionsWith(player))
                 finished = true;
     }
 

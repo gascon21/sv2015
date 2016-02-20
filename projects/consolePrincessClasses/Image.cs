@@ -1,28 +1,25 @@
+// 0.02 19-feb-2016 Chen Chao, Carla Liarte Felipe, Adrian Navarro García:
+//                  recieving an array of string as image, remove methods GetSymbol1 and GetSymbol2
+//                  and included a new method GetImage.
+
 using System;
 
 public class Image
 {
     // Attributes
-    protected char symbol;
-    protected char symbol2;
+    protected string[] image;
     protected ConsoleColor color;
 
-    public Image( char s1, char s2, ConsoleColor c)
+    public Image(string[] image, ConsoleColor c)
     {
-        symbol = s1;
-        symbol2 = s2;
+        this.image = image; 
         color = c;
     }
 
-    public char GetSymbol1()
+    public string[] GetImage()
     {
-        return symbol;
-    }
-
-    public char GetSymbol2()
-    {
-        return symbol2;
-    }
+        return image;
+    }      
 
     public ConsoleColor GetColor()
     {

@@ -1,3 +1,7 @@
+// 0.02 19-feb-2016 Chen Chao, Carla Liarte Felipe, Adrian Navarro García
+//                  including height, width, collissions between sprites
+//                  and method Draw redefined.
+
 using System;
 
 public class Sprite
@@ -6,14 +10,16 @@ public class Sprite
     protected int y;
     protected int horSpeed;
     protected int vertSpeed;
-    protected Image  myImage;
+    protected Image myImage;
     protected int frame;
+    protected int width;
+    protected int height;
 
     public Sprite()
     {
         x = 1;
         y = 1;
-        myImage = new Image('o','o',ConsoleColor.White);
+        myImage = new Image(new string[2],ConsoleColor.White);
     }
 
     public Sprite(int nX, int nY, Image img)
@@ -26,14 +32,14 @@ public class Sprite
     public  void Draw()
     {
         Console.ForegroundColor = myImage.GetColor();
-        Console.SetCursorPosition(x, y);
-        if (frame == 1)
-            Console.WriteLine(myImage.GetSymbol1());  // Player
-        else
-            Console.WriteLine(myImage.GetSymbol2());
+        for (int i = 0; i < myImage.GetImage().Length; i++)
+        {
+            Console.SetCursorPosition(x, y + 1 + i);
+            Console.WriteLine(myImage.GetImage()[i]);
+        }   
     }
 
-    public  void Move()
+    public virtual void Move()
     {
         // TO DO
     }
@@ -63,6 +69,16 @@ public class Sprite
         return y;
     }
 
+    public int GetWidth()
+    {
+        return width;
+    }
+
+    public int GetHeight()
+    {
+        return height;
+    }
+
     public void MoveLeft()
     {
         x--;
@@ -85,5 +101,24 @@ public class Sprite
     {
         y++;
         ChangeFrame();
+    }
+
+    public bool CollisionsWith(Sprite otherSprite)
+    {
+        return (CollisionsWith(otherSprite.GetX(),
+                otherSprite.GetY(),
+                otherSprite.GetX() + otherSprite.GetWidth(),
+                otherSprite.GetY() + otherSprite.GetHeight()));
+    }
+
+    public bool CollisionsWith(int xStart, int yStart, int xEnd, int yEnd)
+    {
+        if ((x < xEnd) &&
+            (x + width > xStart) &&
+            (y < yEnd) &&
+            (y + height > yStart)
+            )
+            return true;
+        return false;
     }
 }

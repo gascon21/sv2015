@@ -8,6 +8,8 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
+   0.16  19-Feb-2016  Ruben blanco and Indra:
+                        Changes on all the TranslatorClass-involved changes and the fancy welcome screen
    0.15  18-Feb-2016  Nacho: Skeleton for ViewLastTransactions, ShowWithNoScroll
                         Example of use of "Translator" in "DisplayMenu"
    0.14  13-Feb-2016  Nacho: Uses "TransactionList" instead of an array, methods are not static,
@@ -24,6 +26,7 @@
    0.06  06-Nov-2015  Sacha Van de Sijpe: Array of structs
    0.05  30-Oct-2015  Victor Carretero: Parallel arrays (up to 100.000 Transaction)
    0.04  30-Oct-2015  Victor Carretero: Parallel arrays (still one transactions)
+
    0.03  23-Oct-2015  José Vicente Leal: Display one transactions
    0.02  23-Oct-2015  Vicente Cuenca: Enter one transactions
    0.01  16-Oct-2015  Jorge Montalvo: Main menu (switch)
@@ -37,7 +40,7 @@ namespace HomeAccounting2
     public class HomeAccounting
     {
         protected TransactionsList transactions;
-        protected string language;
+        protected static string language;
 
         public HomeAccounting()
         {
@@ -48,18 +51,22 @@ namespace HomeAccounting2
         public void DisplayMenu()
         {
             Console.Clear();
-            Console.WriteLine("1.-" + Translator.GetTranslation(language,"addtr"));
-            Console.WriteLine("2.-View last Transactions");
-            Console.WriteLine("3.-Monthly Transactions");
-            Console.WriteLine("4.-Account totals");
-            Console.WriteLine("5.-Search");
-            Console.WriteLine("0.-Exit");
+            EnhancedConsole.WriteCenteredAt(2, 'y', "Home Accounting");
+            EnhancedConsole.WriteAt(10, 5, 'c',"1.-" + Translator.GetTranslation(language,"addtr"));
+            EnhancedConsole.WriteAtNextRow("2.-"+ Translator.GetTranslation(language,"viewtr"));
+            EnhancedConsole.WriteAtNextRow("3.-" + Translator.GetTranslation(language, "monthtr"));
+            EnhancedConsole.WriteAtNextRow("4.-" +Translator.GetTranslation(language, "accountstr"));
+            EnhancedConsole.WriteAtNextRow("5.-" +Translator.GetTranslation(language, "searchtr"));
+            EnhancedConsole.WriteAtNextRow("6.-" + Translator.GetTranslation(language, "lchange"));
+            EnhancedConsole.WriteAtNextRow("0.-" +Translator.GetTranslation(language, "exits"));
+
+            EnhancedConsole.WriteAt(10, 14, '0', "");
         }
 
 
         public char GetOption()
         {
-            Console.Write("Choose an option: ");
+            Console.Write(Translator.GetTranslation(language, "chosse"));
             return Console.ReadKey().KeyChar;
         }
 
@@ -67,25 +74,25 @@ namespace HomeAccounting2
         public void AddTransaction()
         {
             Console.WriteLine();
-            Console.WriteLine("Enter the amount:");
+            Console.WriteLine(Translator.GetTranslation(language, "askamount"));
             double amount = Convert.ToDouble(Console.ReadLine());
 
-            Console.WriteLine("Enter the description:");
+            Console.WriteLine(Translator.GetTranslation(language, "askdesctr"));
             string description = Console.ReadLine();
 
-            Console.WriteLine("Enter the day:");
+            Console.WriteLine(Translator.GetTranslation(language, "askday"));
             byte day = Convert.ToByte(Console.ReadLine());
 
-            Console.WriteLine("Enter the month:");
+            Console.WriteLine(Translator.GetTranslation(language, "askmonth"));
             byte month = Convert.ToByte(Console.ReadLine());
 
-            Console.WriteLine("Enter the year:");
+            Console.WriteLine(Translator.GetTranslation(language, "askyear"));
             ushort year = Convert.ToUInt16(Console.ReadLine());
 
-            Console.WriteLine("Enter the account:");
+            Console.WriteLine(Translator.GetTranslation(language, "askaccount"));
             string account = Console.ReadLine();
 
-            Console.WriteLine("Enter the category:");
+            Console.WriteLine(Translator.GetTranslation(language, "askaccount"));
             string category = Console.ReadLine();
 
             transactions.Add(new Transaction(day, month, year, amount,
@@ -103,9 +110,9 @@ namespace HomeAccounting2
         {
             ushort searchyear;
             byte searchmonth;
-            Console.Write("Enter year: ");
+            Console.Write(Translator.GetTranslation(language, "askyear"));
             searchyear = Convert.ToUInt16(Console.ReadLine());
-            Console.Write("Enter the month: ");
+            Console.Write(Translator.GetTranslation(language, "askmonth"));
             searchmonth = Convert.ToByte(Console.ReadLine());
             /* TO DO: Ask TransactionsList for the info */
             /*
@@ -129,7 +136,7 @@ namespace HomeAccounting2
 
         public void Search()
         {
-            Console.Write("Enter your search: ");
+            Console.Write(Translator.GetTranslation(language, "searchtr"));
             string search = Console.ReadLine();
             /* TO DO: Ask TransactionsList for the info */
             /*
@@ -156,7 +163,7 @@ namespace HomeAccounting2
 
         public static void WarnNotAvailable()
         {
-            Console.WriteLine("Option not available");
+            Console.WriteLine(Translator.GetTranslation(language, "invalidoption"));
         }
 
         public static string LoadConfig()
@@ -175,10 +182,18 @@ namespace HomeAccounting2
             newFile.WriteLine(language);
             newFile.Close();
         }
+        public void ChangeLanguage()
+        {
+            Console.WriteLine(Translator.GetTranslation(language, "langchoose"));
+            language = Console.ReadLine();
+        }
 
 
         public void Run()
         {
+            IntroScreen intro = new IntroScreen();
+            intro.Show();
+
             string language = LoadConfig();
             char option;
             do
@@ -211,8 +226,12 @@ namespace HomeAccounting2
                         Search();
                         break;
 
+                    case '6':
+                        ChangeLanguage();
+                        break;
+
                     default:
-                        Console.WriteLine("Unknown option");
+                        Console.WriteLine(Translator.GetTranslation(language, "unknow"));
                         break;
                 }
             }
@@ -227,7 +246,7 @@ namespace HomeAccounting2
                 Console.Clear();
                 Console.WriteLine(data[0]);
             }
-            Console.Write("Press a key to return ");
+            Console.Write(Translator.GetTranslation(language, "keypress"));
             Console.ReadKey();
         }
 

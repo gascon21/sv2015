@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CreditsScreen.cs" />
+    <Compile Include="EnhancedConsole.cs" />
     <Compile Include="HelpScreen.cs" />
     <Compile Include="IntroScreen.cs" />
     <Compile Include="Prediction.cs" />

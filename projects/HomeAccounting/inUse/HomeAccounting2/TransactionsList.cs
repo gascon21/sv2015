@@ -8,6 +8,7 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
+   0.16  19-Feb-2016  Mas, Esteve, Van de sijpe: GetLastDataAsText
    0.15  18-Feb-2016  Nacho: Skeleton for GetLastDataAsText
    0.14  13-Feb-2016  Nacho: Save & Load Enabled. Sort brought from Main 
                         & called after Add; prototype for a few new methods
@@ -36,7 +37,7 @@ namespace HomeAccounting2
         public void Add(Transaction newtransaction)
         {
             transactions.Add(newtransaction);
-            transactions.Sort();
+            Sort();
         }
 
 
@@ -103,13 +104,23 @@ namespace HomeAccounting2
         public string[] GetLastDataAsText(short amount)
         {
             string[] data;
+
+            if (Count() == 0)
+                return null;
             // TO DO: Return "amount" data, instead of 1
-            data = new string[1];
-            if (Count() > 0)
-                data[0] = Get(0).ToString();
+            if (amount > Count())
+                data = new string[Count()];
             else
-                data[0] = "No data";
-            
+                data = new string[amount];
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (amount > Count())
+                    data[i] = Get(i).ToString();
+                else
+                    data[i] = Get(Count() - amount + i).ToString();
+            }
+               
             return data;
         }
 

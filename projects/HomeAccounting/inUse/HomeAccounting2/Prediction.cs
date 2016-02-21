@@ -8,13 +8,15 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
-   0.12  12-Feb-2016  Nacho: Empty skeleton
+   0.16  19-Feb-2016  Sergio Martínez Mira, María Jesús Atalaya, Gonzalo García: 
+                          Comprovation  of the coherence of the code.
    0.13  12-Feb-2016  Jorge Montalvo, Manuel Coronado, David Gascón: Class Prediction
+   0.12  12-Feb-2016  Nacho: Empty skeleton
  ---------------------------------------------------- */
 
 namespace HomeAccounting2
 {
-    class Prediction
+    public class Prediction
     {
         protected byte days;
         protected byte months;

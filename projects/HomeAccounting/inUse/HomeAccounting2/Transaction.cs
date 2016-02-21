@@ -8,6 +8,7 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
+   0.16  19-Feb-2016  Nacho: "ToString" slightly more detailed
    0.14  13-Feb-2016  Nacho: Attribute names in singular; prototype for "ToString"
    0.13  12-Feb-2016  Jorge Montalvo, Manuel Coronado, David Gascón: Class Transaction
    0.12  12-Feb-2016  Nacho: "struct" turned into "class" (still public attributes)
@@ -109,7 +110,16 @@ namespace HomeAccounting2
         public override string ToString()
         {
             // TO DO: return DD/MM/AAAA + Descript (x40) + Amount + categ + account
-            return description;
+            string desc;
+            if (description.Length > 40)
+                desc = description.Substring(0, 47) + "...";
+            else
+                desc = description + new string(' ', 40 - description.Length);
+
+            return day.ToString("00")+"/"+
+                month.ToString("00") + "/" +
+                year.ToString("00") + "  " +
+                desc;
         }
     }
 }

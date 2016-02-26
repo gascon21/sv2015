@@ -8,6 +8,7 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
+   0.17  26-Feb-2016  Nacho: Check errors when loading
    0.16  19-Feb-2016  Mas, Esteve, Van de sijpe: GetLastDataAsText
    0.15  18-Feb-2016  Nacho: Skeleton for GetLastDataAsText
    0.14  13-Feb-2016  Nacho: Save & Load Enabled. Sort brought from Main 
@@ -150,23 +151,33 @@ namespace HomeAccounting2
 
         public void Load()
         {
+            if (!File.Exists("data.dat"))
+                return;
+
             string line;
-            StreamReader dataFile = File.OpenText("data.dat");
-            do
+            try
             {
-                line = dataFile.ReadLine();
-                if (line != null)
+                StreamReader dataFile = File.OpenText("data.dat");
+                do
                 {
-                    string[] data = line.Split('|');
-                    Add( new Transaction(Convert.ToByte(data[0]), 
-                        Convert.ToByte(data[1]), 
-                        Convert.ToUInt16(data[2]), 
-                        Convert.ToDouble(data[3]), 
-                        data[4], data[5], data[6]));
+                    line = dataFile.ReadLine();
+                    if (line != null)
+                    {
+                        string[] data = line.Split('|');
+                        Add(new Transaction(Convert.ToByte(data[0]),
+                            Convert.ToByte(data[1]),
+                            Convert.ToUInt16(data[2]),
+                            Convert.ToDouble(data[3]),
+                            data[4], data[5], data[6]));
+                    }
                 }
-            } 
-            while (line != null);
-            dataFile.Close();
+                while (line != null);
+                dataFile.Close();
+            }
+            catch( Exception )
+            {
+                // Nothing done at this point
+            }
         }
 
 

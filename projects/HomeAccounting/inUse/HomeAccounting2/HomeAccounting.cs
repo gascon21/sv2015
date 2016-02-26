@@ -8,6 +8,7 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
+   0.17  26-Feb-2016  Nacho: Load and save sata, minor corrections
    0.16  19-Feb-2016  Ruben blanco and Indra:
                         Changes on all the TranslatorClass-involved changes and the fancy welcome screen
    0.15  18-Feb-2016  Nacho: Skeleton for ViewLastTransactions, ShowWithNoScroll
@@ -74,25 +75,26 @@ namespace HomeAccounting2
         public void AddTransaction()
         {
             Console.WriteLine();
-            Console.WriteLine(Translator.GetTranslation(language, "askamount"));
+            Console.Write
+                (Translator.GetTranslation(language, "askamount"));
             double amount = Convert.ToDouble(Console.ReadLine());
 
-            Console.WriteLine(Translator.GetTranslation(language, "askdesctr"));
+            Console.Write(Translator.GetTranslation(language, "askdesctr"));
             string description = Console.ReadLine();
 
-            Console.WriteLine(Translator.GetTranslation(language, "askday"));
+            Console.Write(Translator.GetTranslation(language, "askday"));
             byte day = Convert.ToByte(Console.ReadLine());
 
-            Console.WriteLine(Translator.GetTranslation(language, "askmonth"));
+            Console.Write(Translator.GetTranslation(language, "askmonth"));
             byte month = Convert.ToByte(Console.ReadLine());
 
-            Console.WriteLine(Translator.GetTranslation(language, "askyear"));
+            Console.Write(Translator.GetTranslation(language, "askyear"));
             ushort year = Convert.ToUInt16(Console.ReadLine());
 
-            Console.WriteLine(Translator.GetTranslation(language, "askaccount"));
+            Console.Write(Translator.GetTranslation(language, "askaccount"));
             string account = Console.ReadLine();
 
-            Console.WriteLine(Translator.GetTranslation(language, "askaccount"));
+            Console.Write(Translator.GetTranslation(language, "askcategory"));
             string category = Console.ReadLine();
 
             transactions.Add(new Transaction(day, month, year, amount,
@@ -114,6 +116,9 @@ namespace HomeAccounting2
             searchyear = Convert.ToUInt16(Console.ReadLine());
             Console.Write(Translator.GetTranslation(language, "askmonth"));
             searchmonth = Convert.ToByte(Console.ReadLine());
+
+            ShowWithScroll(transactions.GetDataInAMonthAsText(searchmonth, searchyear));
+
             /* TO DO: Ask TransactionsList for the info */
             /*
             for (uint i = 0; i < numElements; i++)
@@ -138,6 +143,9 @@ namespace HomeAccounting2
         {
             Console.Write(Translator.GetTranslation(language, "searchtr"));
             string search = Console.ReadLine();
+
+            ShowWithScroll(transactions.GetSearchResultsAsText(search));
+
             /* TO DO: Ask TransactionsList for the info */
             /*
             for (int i = 0; i < numElements; i++)
@@ -182,6 +190,7 @@ namespace HomeAccounting2
             newFile.WriteLine(language);
             newFile.Close();
         }
+
         public void ChangeLanguage()
         {
             Console.WriteLine(Translator.GetTranslation(language, "langchoose"));
@@ -192,6 +201,7 @@ namespace HomeAccounting2
         public void Run()
         {
             IntroScreen intro = new IntroScreen();
+            transactions.Load();
             intro.Show();
 
             string language = LoadConfig();
@@ -236,11 +246,26 @@ namespace HomeAccounting2
                 }
             }
             while (option != '0');
+            transactions.Save();
         }
 
         private void ShowWithNoScroll(string[] data)
         {
             // TO DO: Complete, so that it shows the first 20 lines
+            if ((data != null) && (data.Length > 0))
+            {
+                Console.Clear();
+                Console.WriteLine(data[0]);
+            }
+            Console.Write(Translator.GetTranslation(language, "keypress"));
+            Console.ReadKey();
+        }
+
+
+        private void ShowWithScroll(string[] data)
+        {
+            // TO DO: Complete, so that it shows the first 20 lines
+            // and then allows to scroll up and down
             if ((data != null) && (data.Length > 0))
             {
                 Console.Clear();

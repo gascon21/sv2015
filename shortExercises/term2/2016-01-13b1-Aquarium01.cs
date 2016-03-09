@@ -79,9 +79,9 @@ public class Fish
     protected byte fishY = 45;
 
     public Fish(string newFishImage,byte fishSpeed)
-	{
+    {
         fishImage = newFishImage;
-	}
+    }
 
     public void SetFishImage(string newFishImage)
     {

@@ -8,17 +8,17 @@ public class BMPBinaryReader
         string fileName;
         int width, height;
 
-		Console.Write("Enter the file name: ");
-		fileName = Console.ReadLine();
-		Console.WriteLine();
-		if (!File.Exists(fileName))
-		{
-			Console.WriteLine("Not found ");
-			return;
+        Console.Write("Enter the file name: ");
+        fileName = Console.ReadLine();
+        Console.WriteLine();
+        if (!File.Exists(fileName))
+        {
+            Console.WriteLine("Not found ");
+            return;
         } 
 
         BinaryReader file = new BinaryReader(
-			File.Open(fileName, FileMode.Open));
+            File.Open(fileName, FileMode.Open));
         
         file.BaseStream.Seek(18, SeekOrigin.Begin);
         width = file.ReadInt32();                

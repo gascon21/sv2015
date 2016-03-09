@@ -21,7 +21,7 @@ public class binaryReader
             return;
 
         BinaryReader myFile = new BinaryReader(
-			File.Open(name1,FileMode.Open));
+            File.Open(name1,FileMode.Open));
         myFile.BaseStream.Seek(4, SeekOrigin.Begin);
 
         short xMin = myFile.ReadInt16();
@@ -30,7 +30,7 @@ public class binaryReader
         short yMax = myFile.ReadInt16();
 
         Console.WriteLine("Width = {0}, height = {1}", 
-			xMax - xMin + 1, yMax - yMin + 1);
+            xMax - xMin + 1, yMax - yMin + 1);
         myFile.Close();
     }
 }

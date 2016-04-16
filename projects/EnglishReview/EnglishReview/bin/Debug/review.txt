@@ -1,0 +1,5 @@
+To do;Hacer;Verbs
+To know;Saber;Verbs
+Easy;Fácil;Adjectives
+Difficult;Difícil;Adjectives
+To go out;Salir;Phrasal verbs

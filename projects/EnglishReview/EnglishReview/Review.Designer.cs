@@ -36,22 +36,24 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.lbEnglish = new System.Windows.Forms.Label();
             this.lbSpanish = new System.Windows.Forms.Label();
+            this.lbProgress = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btCheck
             // 
             this.btCheck.Location = new System.Drawing.Point(314, 388);
-            this.btCheck.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btCheck.Margin = new System.Windows.Forms.Padding(2);
             this.btCheck.Name = "btCheck";
             this.btCheck.Size = new System.Drawing.Size(120, 66);
             this.btCheck.TabIndex = 2;
             this.btCheck.Text = "Check";
             this.btCheck.UseVisualStyleBackColor = true;
+            this.btCheck.Click += new System.EventHandler(this.btCheck_Click);
             // 
             // btNext
             // 
             this.btNext.Location = new System.Drawing.Point(544, 388);
-            this.btNext.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btNext.Margin = new System.Windows.Forms.Padding(2);
             this.btNext.Name = "btNext";
             this.btNext.Size = new System.Drawing.Size(134, 66);
             this.btNext.TabIndex = 3;
@@ -62,7 +64,7 @@
             // btBack
             // 
             this.btBack.Location = new System.Drawing.Point(35, 388);
-            this.btBack.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btBack.Margin = new System.Windows.Forms.Padding(2);
             this.btBack.Name = "btBack";
             this.btBack.Size = new System.Drawing.Size(182, 66);
             this.btBack.TabIndex = 4;
@@ -106,7 +108,6 @@
             this.lbEnglish.Size = new System.Drawing.Size(129, 36);
             this.lbEnglish.TabIndex = 7;
             this.lbEnglish.Text = "Example";
-            this.lbEnglish.Click += new System.EventHandler(this.label3_Click);
             // 
             // lbSpanish
             // 
@@ -119,11 +120,21 @@
             this.lbSpanish.TabIndex = 8;
             this.lbSpanish.Text = "Ejemplo";
             // 
+            // lbProgress
+            // 
+            this.lbProgress.AutoSize = true;
+            this.lbProgress.Location = new System.Drawing.Point(363, 489);
+            this.lbProgress.Name = "lbProgress";
+            this.lbProgress.Size = new System.Drawing.Size(34, 13);
+            this.lbProgress.TabIndex = 9;
+            this.lbProgress.Text = "1 of 1";
+            // 
             // English_Aplication
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(736, 531);
+            this.Controls.Add(this.lbProgress);
             this.Controls.Add(this.lbSpanish);
             this.Controls.Add(this.lbEnglish);
             this.Controls.Add(this.label2);
@@ -131,7 +142,7 @@
             this.Controls.Add(this.btBack);
             this.Controls.Add(this.btNext);
             this.Controls.Add(this.btCheck);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "English_Aplication";
             this.Text = "English Review";
             this.ResumeLayout(false);
@@ -148,5 +159,6 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Label lbEnglish;
         private System.Windows.Forms.Label lbSpanish;
+        private System.Windows.Forms.Label lbProgress;
     }
 }

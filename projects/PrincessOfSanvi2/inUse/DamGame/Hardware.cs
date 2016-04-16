@@ -8,6 +8,10 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
+   0.04  15-Apr-2016  David Gascón and Sergio Martinez:
+                      Added a function to drawn an image from a text.
+   0.03  15-Apr-2016  David Gascón and Sergio Martinez:
+                      Memory comsumption in WritteHiddenText solved.
    0.02  20-Nov-2015  Nacho Cabanes:
                       "Image" moved to a different file
                       Support for PNG images, TTF fonts, joystick
@@ -77,12 +81,23 @@ public class Hardware
         drawHiddenImage(image.GetPointer(), x + startX, y + startY);
     }
 
+    public static Image CreateImageFromText(string txt, byte r, byte g, byte b, Font f)
+    {
+        Sdl.SDL_Color color = new Sdl.SDL_Color(r, g, b);
+        IntPtr textoComoImagen = SdlTtf.TTF_RenderText_Solid(
+            f.GetPointer(), txt, color);
+
+        return new Image(textoComoImagen);
+    }
+
     public static void WriteHiddenText(string txt,
         short x, short y, byte r, byte g, byte b, Font f)
     {
         Sdl.SDL_Color color = new Sdl.SDL_Color(r, g, b);
         IntPtr textoComoImagen = SdlTtf.TTF_RenderText_Solid(
             f.GetPointer(), txt, color);
+
+
         //if (textoComoImagen == IntPtr.Zero)
         //   Environment.Exit(5);
 
@@ -93,6 +108,8 @@ public class Hardware
 
         Sdl.SDL_BlitSurface(textoComoImagen, ref origen,
             hiddenScreen, ref dest);
+
+        Sdl.SDL_FreeSurface(textoComoImagen);
     }
 
     public static void ShowHiddenScreen()

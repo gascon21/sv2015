@@ -8,7 +8,8 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
-   0.17  26-Feb-2016  Nacho: Load and save sata, minor corrections
+   0.18  15-Abr-2016  Monica Esteve, Jose Vicente: Improved usability
+   0.17  26-Feb-2016  Nacho: Load and save data, minor corrections
    0.16  19-Feb-2016  Ruben blanco and Indra:
                         Changes on all the TranslatorClass-involved changes and the fancy welcome screen
    0.15  18-Feb-2016  Nacho: Skeleton for ViewLastTransactions, ShowWithNoScroll
@@ -77,7 +78,11 @@ namespace HomeAccounting2
             Console.WriteLine();
             Console.Write
                 (Translator.GetTranslation(language, "askamount"));
-            double amount = Convert.ToDouble(Console.ReadLine());
+            string amount = Console.ReadLine();
+
+            // "C" can be used to Cancel
+            if (amount.ToUpper() == "C")
+                return;
 
             Console.Write(Translator.GetTranslation(language, "askdesctr"));
             string description = Console.ReadLine();
@@ -97,13 +102,15 @@ namespace HomeAccounting2
             Console.Write(Translator.GetTranslation(language, "askcategory"));
             string category = Console.ReadLine();
 
-            transactions.Add(new Transaction(day, month, year, amount,
+            transactions.Add(new Transaction(day, month, year, Convert.ToDouble(amount),
                 description, account, category));
+
         }
 
 
         public void ViewLastTransactions()
         {
+            Console.WriteLine();
             ShowWithNoScroll( transactions.GetLastDataAsText(20) );
         }
 
@@ -112,6 +119,7 @@ namespace HomeAccounting2
         {
             ushort searchyear;
             byte searchmonth;
+            Console.WriteLine();
             Console.Write(Translator.GetTranslation(language, "askyear"));
             searchyear = Convert.ToUInt16(Console.ReadLine());
             Console.Write(Translator.GetTranslation(language, "askmonth"));
@@ -141,6 +149,7 @@ namespace HomeAccounting2
 
         public void Search()
         {
+            Console.WriteLine();
             Console.Write(Translator.GetTranslation(language, "searchtr"));
             string search = Console.ReadLine();
 
@@ -193,8 +202,15 @@ namespace HomeAccounting2
 
         public void ChangeLanguage()
         {
+            Console.WriteLine();
             Console.WriteLine(Translator.GetTranslation(language, "langchoose"));
             language = Console.ReadLine();
+            if ((language.ToUpper() != "ES") && (language.ToUpper() != "EN") && 
+                (language.ToUpper() != "CA"))
+                Console.WriteLine(Translator.GetTranslation(language, "invalidoption"));
+            else
+                SaveConfig(language);
+            
         }
 
 

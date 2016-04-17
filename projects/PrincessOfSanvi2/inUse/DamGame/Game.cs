@@ -1,4 +1,26 @@
-﻿using System;
+﻿/// <summary>
+/// Part of DamGame (Princess of Sanvi: a game by students of
+/// Multiplaftorm Applications Development at IES San Vicente)
+/// 
+///  Game.cs: game logic & game loop 
+///  @author Nacho Cabanes, Alumnos DAM IesSanVicente 2015-16
+/// </summary>
+
+/* --------------------------------------------------         
+   Versions history
+   
+   Num.   Date        By / Changes
+   ---------------------------------------------------
+   0.08  15-Apr-2016  Chen, Sacha:  Added new screens (3 total screens)
+   0.05  12-Feb-2016  Player can jump and fall
+   0.03a 29-Jan-2016  Collisions between enemies and player,
+                        Example of collisions with the background
+   0.02  08-Jan-2016  Player can be moved in four directions,
+                        enemies move on their own
+   0.01  03-Jan-2016  Nacho: Basic skeleton for the class
+ ---------------------------------------------------- */
+
+using System;
 
 namespace DamGame
 {
@@ -10,22 +32,22 @@ namespace DamGame
         private Level currentLevel;
         private bool finished;
         private int numEnemies;
-
+        private int level;
         public Game()
         {
             font18 = new Font("data/Joystix.ttf", 18);
             player = new Player(this);
-
+            level = 1;
             Random rnd = new Random();
             numEnemies = 2;
             enemies = new Enemy[numEnemies];
+            currentLevel = new Level();
             for (int i = 0; i < numEnemies; i++)
             {
-                enemies[i] = new Enemy(rnd.Next(200, 800), rnd.Next(50, 600));
+                enemies[i] = new Enemy(currentLevel.GetEnemyX()[i], currentLevel.GetEnemyY()[i]);
                 enemies[i].SetSpeed(rnd.Next(1, 5), 0);
             }
-
-            currentLevel = new Level();
+                  
             finished = false;
         }
 
@@ -90,6 +112,28 @@ namespace DamGame
             for (int i = 0; i < numEnemies; i++)
                 if (enemies[i].CollisionsWith(player))
                     finished = true;
+            if (player.GetX() + player.GetWidth() >= currentLevel.GetMaxX() &&
+                    level < 3)
+            {
+                level++;
+                player.SetX(currentLevel.GetMinX() + 5);
+                currentLevel.SetLevel(level);
+                for (int i = 0; i < numEnemies; i++)
+                {
+                    enemies[i].SetX(currentLevel.GetEnemyX()[i]);
+                }
+            }
+
+            if (player.GetX() <= currentLevel.GetMinX() && level > 0)
+            {
+                level--;
+                player.SetX(currentLevel.GetMaxX() - player.GetWidth() - 5);
+                currentLevel.SetLevel(level);
+                for (int i = 0; i < numEnemies; i++)
+                {
+                    enemies[i].SetX(currentLevel.GetEnemyX()[i]); 
+                }
+            }
         }
 
         public void PauseTillNextFrame()
@@ -114,6 +158,11 @@ namespace DamGame
         public bool IsValidMove(int xMin, int yMin, int xMax, int yMax)
         {
             return currentLevel.IsValidMove(xMin, yMin, xMax, yMax);
-        }
+        } 
+        
+        public Level GetLevel()
+        {
+            return currentLevel;
+        }   
     }
 }

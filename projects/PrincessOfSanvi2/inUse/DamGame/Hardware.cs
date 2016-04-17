@@ -1,5 +1,9 @@
 ﻿/// <summary>
-///  Hardware: to hide SDL details and allow an easier access
+/// Part of DamGame (Princess of Sanvi: a game by students of
+/// Multiplaftorm Applications Development at IES San Vicente)
+/// 
+///  Hardware.cs: to hide SDL details and allow an easier access
+///    to screen
 ///  @author Nacho Cabanes
 /// </summary>
 
@@ -8,9 +12,9 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
-   0.04  15-Apr-2016  David Gascón and Sergio Martinez:
-                      Added a function to drawn an image from a text.
-   0.03  15-Apr-2016  David Gascón and Sergio Martinez:
+   0.07b 15-Apr-2016  David Gascón and Sergio Martinez:
+                      Added a function to draw an image from a text.
+   0.07a 15-Apr-2016  David Gascón and Sergio Martinez:
                       Memory comsumption in WritteHiddenText solved.
    0.02  20-Nov-2015  Nacho Cabanes:
                       "Image" moved to a different file

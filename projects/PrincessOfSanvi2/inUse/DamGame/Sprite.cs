@@ -1,10 +1,20 @@
-﻿/**
- * Sprite.cs - A basic graphic element to inherit from
- * 
- * Changes:
- * 0.01, 24-jul-2013: Initial version, based on SdlMuncher 0.12
- */
+﻿/// <summary>
+/// Part of DamGame (Princess of Sanvi: a game by students of
+/// Multiplaftorm Applications Development at IES San Vicente)
+/// 
+///  Sprite.cs - A basic graphic element to inherit from
+///  @author Nacho Cabanes
+/// </summary>
 
+/* --------------------------------------------------         
+   Versions history
+   
+   Num.   Date        By / Changes
+   ---------------------------------------------------
+   0.08  15-Apr-2016  Chen, Sacha: Added SetX, SetY
+   0.03c 04-Feb-2016  Nacho: Added CheckCollisions
+   0.01  24-Jul-2013  Nacho: Initial version, based on SdlMuncher 0.12
+ ---------------------------------------------------- */
 
 class Sprite
 {
@@ -87,9 +97,19 @@ class Sprite
         return x;
     }
 
+    public void SetX(int x)
+    {
+        this.x = x;
+    }
+
     public int GetY()
     {
         return y;
+    }
+
+    public void SetY(int y)
+    {
+        this.y = y;
     }
 
     public int GetWidth()

@@ -1,4 +1,26 @@
-﻿namespace DamGame
+﻿/// <summary>
+/// Part of DamGame (Princess of Sanvi: a game by students of
+/// Multiplaftorm Applications Development at IES San Vicente)
+/// 
+///  Player.cs: logic for the player
+///  @author Nacho Cabanes
+/// </summary>
+
+/* --------------------------------------------------         
+   Versions history
+   
+   Num.   Date        By / Changes
+   ---------------------------------------------------
+   0.08  15-Apr-2016  Chen, Sacha:  Changed starting x, so that it is not in the
+                        edge of a screen
+   0.05  12-Feb-2016  Player can jump and fall
+   0.04b 06-Feb-2016  Animated movement
+   0.03c 04-Feb-2016  Corrected size and speed
+   0.02  08-Jan-2016  Player can be moved in four directions
+   0.01  03-Jan-2016  Nacho: Basic skeleton for the class
+ ---------------------------------------------------- */
+
+namespace DamGame
 {
     class Player : Sprite
     {
@@ -20,7 +42,7 @@
                 new string[] { "data/player.png", "data/player2.png" });
             ChangeDirection(LEFT);
 
-            x = 50;
+            x = 81;
             y = 120;
             xSpeed = 4;
             ySpeed = 4;

@@ -1,5 +1,9 @@
 ﻿/// <summary>
-///  Hardware: to hide SDL details and allow an easier access
+/// Part of DamGame (Princess of Sanvi: a game by students of
+/// Multiplaftorm Applications Development at IES San Vicente)
+/// 
+///  Image: to hide SDL details on IntPtr and allow an easier 
+///    access to image handling
 ///  @author Nacho Cabanes, Alumnos DAM IesSanVicente 2015-16
 /// </summary>
 
@@ -8,7 +12,7 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
-   0.02  15-Apr-2016  David Gascón and Sergio Martinez:
+   0.07b 15-Apr-2016  David Gascón and Sergio Martinez:
                       Added a constructor to load an image from a pointer.
    0.01, 20-Nov-2015  Nacho: Basic skeleton
  ---------------------------------------------------- */

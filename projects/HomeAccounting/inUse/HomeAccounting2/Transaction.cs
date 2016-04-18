@@ -8,6 +8,7 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
+   0.20  15-Apr-2016  Pedro, Victor: Current date at each transaction (second constructor)
    0.16  19-Feb-2016  Nacho: "ToString" slightly more detailed
    0.14  13-Feb-2016  Nacho: Attribute names in singular; prototype for "ToString"
    0.13  12-Feb-2016  Jorge Montalvo, Manuel Coronado, David Gascón: Class Transaction
@@ -26,11 +27,25 @@ namespace HomeAccounting2
         protected string account;
         protected string category;
 
-        public Transaction(byte day, byte month, ushort year, double amount, string description, string account, string category)
+        public Transaction(byte day, byte month, ushort year, double amount, 
+            string description, string account, string category)
         {
             this.day = day;
             this.month = month;
             this.year = year;
+            this.amount = amount;
+            this.description = description;
+            this.account = account;
+            this.category = category;
+        }
+
+        public Transaction(double amount, string description, string account, 
+            string category)
+        {
+            System.DateTime date = System.DateTime.Now;
+            this.day = (byte) date.Day;
+            this.month = (byte) date.Month;
+            this.year = (ushort) date.Year;
             this.amount = amount;
             this.description = description;
             this.account = account;

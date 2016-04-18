@@ -8,6 +8,8 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
+   0.19  15-Abr-2016  Indra, corrections by Nacho: implement GetSearchResultsAsText 
+                        and GetDataInAMonthAsText
    0.17  26-Feb-2016  Nacho: Check errors when loading
    0.16  19-Feb-2016  Mas, Esteve, Van de sijpe: GetLastDataAsText
    0.15  18-Feb-2016  Nacho: Skeleton for GetLastDataAsText
@@ -75,30 +77,42 @@ namespace HomeAccounting2
         
         public string[] GetDataInAMonthAsText(byte month, ushort year)
         {
-            /*
-            ArrayList transactionsByMonthYear = new ArrayList();
             
-            if (Count() > 0)
+            List<string> transactionsByMonthYear = new List<string>();
+            //First I check if there are any transactions available
+            if (transactions.Count> 0)
             {
                 int amount = 0;
-
-                for (int i = 0; i < Count(); i++)  
-                    if (transactions[i].GetMonths() == month &&
-                            transactions[i].GetYears() == year)
-                        amount++;  
+                // Here I check all the transactions for coincidences in month and year
+                for (int i = 0; i < transactions.Count; i++)
+                    if (transactions[i].GetMonth() == month &&
+                            transactions[i].GetYear() == year)
+                    {
+                        transactionsByMonthYear.Add( Get(i).ToString() );
+                        amount++;
+                    }
 
                 string[] result = new string[amount];
 
-                for (int i = 0; i < result.Length; i++)
+                // If there are no matches, I return null
+                if (transactionsByMonthYear.Count == 0)
                 {
-                    result = "" + transactions[i].GetDays().ToString("00") + "/" +
-                        transactions[i].GetMonths().ToString("00") + "/" +
-                        transactions[i].GetYears().ToString("0000") + " ";
+                    return null;
                 }
 
-                return result;
+                // Otherwise, I transform the arrayList into string[] and then return it
+                else
+                {
+                    return transactionsByMonthYear.ToArray();
+                    /*string[] resultsTerms = new string[transactionsByMonthYear.Count];
+                    for (int j = 0; j < resultsTerms.Length; j++)
+                    {
+                        resultsTerms[j] = transactionsByMonthYear[j];
+                    }
+                    return resultsTerms;*/
+                }
             }  
-            */
+            
             return null;
         }
 
@@ -108,7 +122,6 @@ namespace HomeAccounting2
 
             if (Count() == 0)
                 return null;
-            // TO DO: Return "amount" data, instead of 1
             if (amount > Count())
                 data = new string[Count()];
             else
@@ -127,7 +140,41 @@ namespace HomeAccounting2
 
         public string[] GetSearchResultsAsText(string searchText)
         {
-            // TO DO
+            //First I check if there are any transaction created
+            if (transactions.Count >0)
+            {
+                // I create a List of strings to store all the results
+                List<string> searchResults = new List<string>();
+
+                // Then I proceed to check all the transactions looking for coincidences in
+                // their description, account o category, adding if is there any of them
+                for (int i = 0; i < transactions.Count; i++)
+                {
+                    if (transactions[i].GetDescription().Contains(searchText)
+                            || transactions[i].GetAccount().Contains(searchText)
+                            || transactions[i].GetCategory().Contains(searchText))
+                    {
+                        searchResults.Add(Get(i).ToString());
+                    }
+                }
+
+                // If there are no matches, I return null
+                if (searchResults.Count == 0)
+                {
+                    return null;
+                }
+
+                // Otherwise, I transform the arrayList into string[] and then return it
+                else
+                {
+                    string[] resultsTerms = new string[searchResults.Count];
+                    for (int j = 0; j < resultsTerms.Length; j++)
+                    {
+                        resultsTerms[j] = searchResults[j];
+                    }
+                    return resultsTerms;
+                }
+            }
             return null;
         }
 

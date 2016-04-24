@@ -11,6 +11,8 @@
    
    Num.   Date        By / Changes
    ---------------------------------------------------
+   0.09  15-Apr-2016  Miguel Moya and Gonzalo García Soler, minor corrections by Nacho: 
+                        Player can shoot to the right and to the left (1 shot a time)
    0.08  15-Apr-2016  Chen, Sacha:  Added new screens (3 total screens)
    0.05  12-Feb-2016  Player can jump and fall
    0.03a 29-Jan-2016  Collisions between enemies and player,
@@ -33,6 +35,9 @@ namespace DamGame
         private bool finished;
         private int numEnemies;
         private int level;
+        private Shot myShot;
+        private char direction;
+
         public Game()
         {
             font18 = new Font("data/Joystix.ttf", 18);
@@ -49,6 +54,9 @@ namespace DamGame
             }
                   
             finished = false;
+            myShot = new Shot(this, 0, 0, 0);
+            myShot.Hide();
+            direction = 'R';
         }
 
 
@@ -65,6 +73,7 @@ namespace DamGame
             player.DrawOnHiddenScreen();
             for (int i = 0; i < numEnemies; i++)
                 enemies[i].DrawOnHiddenScreen();
+            myShot.DrawOnHiddenScreen();
             Hardware.ShowHiddenScreen();
         }
 
@@ -75,22 +84,42 @@ namespace DamGame
             if (Hardware.KeyPressed(Hardware.KEY_UP))
             {
                 if (Hardware.KeyPressed(Hardware.KEY_RIGHT))
+                {
                     player.JumpRight();
+                    direction = 'R';
+                }
                 else
                 if (Hardware.KeyPressed(Hardware.KEY_LEFT))
+                {
                     player.JumpLeft();
+                    direction = 'L';
+                }
                 else
                     player.Jump();
             }
 
             else if (Hardware.KeyPressed(Hardware.KEY_RIGHT))
+            {
                 player.MoveRight();
+                direction = 'R';
+            }
 
             else if (Hardware.KeyPressed(Hardware.KEY_LEFT))
+            {
                 player.MoveLeft();
+                direction = 'L';
+            }
 
             //if (Hardware.KeyPressed(Hardware.KEY_DOWN))
             //    player.MoveDown();
+
+            if ((Hardware.KeyPressed(Hardware.KEY_SPC)) && ( ! myShot.IsVisible() ))
+            {
+                if (direction == 'R')
+                    myShot = new Shot(this, player.GetX()+20, player.GetY(), 10);
+                else
+                    myShot = new Shot(this, player.GetX(), player.GetY(), -10);
+            }
 
             if (Hardware.KeyPressed(Hardware.KEY_ESC))
                 finished = true;
@@ -101,6 +130,7 @@ namespace DamGame
         public void MoveElements()
         {
             player.Move();
+            myShot.Move();
             for (int i = 0; i < numEnemies; i++)
                 enemies[i].Move();
         }
@@ -110,8 +140,16 @@ namespace DamGame
         public void CheckCollisions()
         {
             for (int i = 0; i < numEnemies; i++)
+                if (enemies[i].CollisionsWith(myShot))
+                {
+                    enemies[i].Hide();
+                    myShot.Hide();
+                }
+
+            for (int i = 0; i < numEnemies; i++)
                 if (enemies[i].CollisionsWith(player))
                     finished = true;
+
             if (player.GetX() + player.GetWidth() >= currentLevel.GetMaxX() &&
                     level < 3)
             {

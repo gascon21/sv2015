@@ -1,4 +1,24 @@
-﻿namespace DamGame
+﻿/// <summary>
+/// Part of DamGame (Princess of Sanvi: a game by students of
+/// Multiplaftorm Applications Development at IES San Vicente)
+/// 
+///  Enemy.cs: logic for the enemy
+///  @author Nacho Cabanes
+/// </summary>
+
+/* --------------------------------------------------         
+   Versions history
+   
+   Num.   Date        By / Changes
+   ---------------------------------------------------
+   0.04b 06-Feb-2016  Animated movement, frame rate adjusted
+   0.04a 04-Feb-2016  Animated movement, first approach (too fast)
+   0.03c 04-Feb-2016  Corrected size and speed
+   0.02  08-Jan-2016  Nacho: Correct image for the real enemy in the game
+   0.01  03-Jan-2016  Nacho: Basic skeleton for the class
+ ---------------------------------------------------- */
+
+namespace DamGame
 {
     class Enemy : Sprite
     {

@@ -1,4 +1,20 @@
-﻿namespace DamGame
+﻿/// <summary>
+/// Part of DamGame (Princess of Sanvi: a game by students of
+/// Multiplaftorm Applications Development at IES San Vicente)
+/// 
+///  DamGame: Launch welcome, credits, game and so on
+///  @author Nacho Cabanes, Alumnos DAM IesSanVicente 2015-16
+/// </summary>
+
+/* --------------------------------------------------         
+   Versions history
+   
+   Num.   Date        By / Changes
+   ---------------------------------------------------
+   0.01  03-Jan-2016  Nacho: First version to launch welcome, credits, game and so on
+ ---------------------------------------------------- */
+
+namespace DamGame
 {
     class DamGame
     {

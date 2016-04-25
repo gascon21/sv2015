@@ -1,6 +1,9 @@
 ﻿/// <summary>
-///  Hardware: to hide SDL details and allow an easier access
-///  @author David Gascón and Sergio Martinez
+/// Part of DamGame (Princess of Sanvi: a game by students of
+/// Multiplaftorm Applications Development at IES San Vicente)
+/// 
+///  WelcomeScreen: first screen shown to the player
+///  @author Nacho Cabanes, David Gascón and Sergio Martinez
 /// </summary>
 
 /* --------------------------------------------------         

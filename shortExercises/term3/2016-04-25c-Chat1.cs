@@ -40,8 +40,11 @@ public class MiniChat
     
     
     public static void Main() 
-        { Console.WriteLine("Pulse 1 para recibir o 2 para enviar"); 
-            string respuesta = Console.ReadLine(); if (respuesta == "2") 
+    { 
+        Console.WriteLine("Pulse 1 para recibir o 2 para enviar"); 
+        string respuesta = Console.ReadLine(); 
+        
+        if (respuesta == "2") 
         // Enviar 
         { 
             string texto = Console.ReadLine();
@@ -50,7 +53,7 @@ public class MiniChat
             Console.WriteLine("Enviado"); 
         }
          else 
-            // Recibir 
+        // Recibir 
         { 
             Console.WriteLine("Esperando... "); 
             Console.WriteLine( esperar(direccionPrueba, puertoPrueba) ); 

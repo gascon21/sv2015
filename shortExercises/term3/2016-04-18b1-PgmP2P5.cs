@@ -60,8 +60,6 @@ class P2toP5
         }
         myWriter2.Close();
 
-
-        myWriter.Close();
         Console.WriteLine("Finished");
     }
 }

@@ -55,15 +55,14 @@ public class Morse
             line = Console.ReadLine();
             if ((line != "") && (line != null))
             {
-                line = line.ToUpper();
-                foreach(char c in line)
+                foreach(char c in line.ToUpper())
                 {
                     if(c == 'O')
                         ToCheck += "-";
                     else if(c == 'A' || c == 'E' || c == 'I' || c == 'U')
                         ToCheck += ".";
                 }
-                Console.WriteLine(CheckCode(line[0],ToCheck));
+                Console.WriteLine(line+ " " + CheckCode(line.ToUpper()[0],ToCheck));
             }
             ToCheck = "";
         }

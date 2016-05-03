@@ -7,18 +7,18 @@ public class Morse
 {
     public static void Main()
     {
-        string sentence;
         string[] words = {".-", "-...", "-.-.", "-..", ".", "..-.",
                 "--.", "....", "..", ".----", "-.-", ".-..", "--", "-.",
                 "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-",
                 ".--", "-..-", "-.--", "--.."};
+        string line;
         do
         {
-            sentence = Console.ReadLine();
-            if(sentence != "")
+            line = Console.ReadLine();
+            if(line != "")
             {
                 string toCompare = "";
-                sentence = sentence.ToUpper();
+                string sentence = line.ToUpper();
                 for (int i = 0; i < sentence.Length; i++)
                 {
                     if(sentence[i] == 'O')
@@ -28,11 +28,11 @@ public class Morse
                         toCompare += '.';
                 }
                 if(toCompare == words[sentence[0] - 65])
-                    Console.WriteLine("OK");
+                    Console.WriteLine(line + " OK");
                 else
-                    Console.WriteLine("X");
+                    Console.WriteLine(line + " X");
             }
         }
-        while (sentence != "");
+        while (line != "");
     }
 }

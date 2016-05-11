@@ -47,13 +47,13 @@
     <Compile Include="EnhancedConsole.cs" />
     <Compile Include="HelpScreen.cs" />
     <Compile Include="IntroScreen.cs" />
-    <Compile Include="Prediction.cs" />
-    <Compile Include="PredictionsList.cs" />
+    <Compile Include="..\common\Prediction.cs" />
+    <Compile Include="..\common\PredictionsList.cs" />
     <Compile Include="HomeAccounting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Transaction.cs" />
-    <Compile Include="TransactionsList.cs" />
-    <Compile Include="Translator.cs" />
+    <Compile Include="..\common\Transaction.cs" />
+    <Compile Include="..\common\TransactionsList.cs" />
+    <Compile Include="..\common\Translator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

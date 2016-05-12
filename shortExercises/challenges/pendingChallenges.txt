@@ -1,7 +1,6 @@
 Challenges which have not been solved yet:
 
 - 010, Prime palindrome (submissions not checked yet)
-- 030, Robot busca tesoros (not attempted)
 - 035, Transporte público (not attempted)
 - 040, Vehículos ecológicos (slow solution)
 - 042, Messita (not attempted)

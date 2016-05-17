@@ -7,6 +7,8 @@ Version    Fecha    Por, cambios
  0.01   16-05-2016  Nacho, esqueleto vacío
  0.05   16-05-2016  Ruben Blanco & Vicente Cuenca: Creacion de cuerpo 
                       principal del Gestor
+ 0.06   16-05-2016  Monica Esteve, Jose Vicente Leal: Mostrar texto con Scroll,
+                      primera aproximación
 */
 
 using System;
@@ -143,4 +145,35 @@ public class GestorDeTareas
         }
         while (option != 0);
     }
+
+    public static void MostrarConScroll(List<string> datos)
+    {
+
+        bool exit = false;
+        int y = Console.CursorTop;
+        int x = Console.CursorLeft;
+
+        do
+        {   // recogemos la tecla presionada
+            ConsoleKeyInfo key = Console.ReadKey();
+
+            // bajamos
+            if (key.Key == ConsoleKey.DownArrow)
+                y += 1;
+            //subimos
+            if (key.Key == ConsoleKey.UpArrow)
+                y -= 1;
+            // control limite superior
+            if (y < 0)
+                y = 0;
+
+            Console.SetCursorPosition(x, y);
+
+            //salimos del scroll
+            if (key.Key == ConsoleKey.Escape)
+                exit = true;
+        }
+        while (!exit);
+    }
+
 }

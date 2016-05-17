@@ -1,3 +1,4 @@
+0.12  17-05-2016  Primera tanda de correcciones, se puede añadir
 0.11  16-05-2016  ListaDeTareas: Cargar y guardar
 0.10  16-05-2016  ListaDeTareas: Funcionalidades básicas
 0.09  16-05-2016  GestorDeTareasWF: Ventana principal

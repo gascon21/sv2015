@@ -7,6 +7,7 @@ Version    Fecha    Por, cambios
  0.01   16-05-2016  Nacho, esqueleto vacío
  0.04   16-05-2016  Indra Lopez y Pedro Perez, atributos, constructor, 
                       metodos mostrarTarea, Posponer y Comprobar
+ 0.06   16-05-2016  Nacho, comentado "Comprobar"
 */
 
 using System;
@@ -45,8 +46,8 @@ class TareaRepetitiva
     public void Comprobar()
     {
         DateTime ahora = DateTime.Now;
-        if (Fecha == ahora && Completada)
-            miTarea.MarcarComoCompletada();
+        //if (Fecha == ahora && Completada)
+        //    miTarea.MarcarComoCompletada();
     }
 
     // La tarea una vez se pospone, pasa a no ser visible 

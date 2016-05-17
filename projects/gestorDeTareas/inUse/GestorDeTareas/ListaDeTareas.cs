@@ -12,6 +12,7 @@ Version    Fecha    Por, cambios
                       Renombradas "Añadir" a "Anyadir"
                       Anayadir realmente añade datos a la lista
                       Guardar ahora es público
+ 0.13   17-05-2016  Adrian Navarro y Victor Carretero : Metodo buscar
  */
 
 using System;
@@ -141,10 +142,24 @@ class ListaDeTareas
         }
     }
 
-
-    public Tarea Buscar(int posicion)
+    /// <summary>
+    ///     Metodo Buscar : Busca un cierto texto en la 
+    ///     descripcion de todas las tareas
+    /// </summary>
+    /// <param name="textoBuscar"></param>
+    /// <returns></returns>
+    public List<string> Buscar(string textoBuscar)
     {
-        return lista[posicion];
+        List<string> resultados = new List<string>();
+
+        for (int i = 0; i < lista.Count; i++)
+        {
+            if (lista[i].Contains(textoBuscar))
+            {
+                resultados.Add(lista[i].Descripcion);
+            }
+        }
+        return resultados;
     }
 
 
@@ -241,7 +256,7 @@ class ListaDeTareas
             {
                 return false;
             }
-            
+
         }
         return false; // Si no existe
     }

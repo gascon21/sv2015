@@ -13,6 +13,7 @@ Version    Fecha    Por, cambios
                       Corregidos "do-while" incorrectos en añadir
                       Se propone la fecha actual (primer acercamiento: día)
                       Renombrada la variable "año" a "anyo"
+ 0.13   17-05-2016  Adrian Navarro y Victor Carretero : Metodo buscar
 
 */
 
@@ -32,7 +33,7 @@ public class GestorDeTareas
         tareas.Cargar();
         byte option;
         DateTime fechaMostrar = DateTime.Now;
-            
+
         do
         {
             // Cargamos la Lista de Tareas
@@ -133,23 +134,29 @@ public class GestorDeTareas
                     //TODO:
                     //miTarea.Guardar();
                     break;
-
                 case (int)options.BUSCAR:
-                    //Console.Write("Que palabra clave debo buscar? ");
-                    //string palabraBuscar = Console.ReadLine();
+                    Console.Write("Que palabra clave debo buscar? ");
+                    string palabraBuscar = Console.ReadLine();
 
-                    Console.WriteLine("Operacion no realizada: En desarrollo");
-                    //TODO:
+                    List<string> resultados = tareas.Buscar(palabraBuscar);
+
+                    Console.WriteLine();
+                    for (int i = 0; i < resultados.Count; i++)
+                    {
+                        Console.WriteLine("Resultado : " + (i + 1));
+                        Console.WriteLine(resultados[i]);
+                        Console.WriteLine();
+                    }
                     break;
 
                 case (int)options.BORRAR:
-                        //Console.Write("Que nº de tarea debo borrar? ");
-                        //string numeroBorrar = Console.ReadLine();
+                    //Console.Write("Que nº de tarea debo borrar? ");
+                    //string numeroBorrar = Console.ReadLine();
 
-                        Console.WriteLine("Operacion no realizada: En desarrollo");
-                        //TODO:
-                        //miTarea.Guardar();
-                        break;
+                    Console.WriteLine("Operacion no realizada: En desarrollo");
+                    //TODO:
+                    //miTarea.Guardar();
+                    break;
 
                 case (int)options.SALIR:
 

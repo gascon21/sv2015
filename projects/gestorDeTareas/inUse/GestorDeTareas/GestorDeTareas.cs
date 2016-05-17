@@ -9,6 +9,11 @@ Version    Fecha    Por, cambios
                       principal del Gestor
  0.06   16-05-2016  Monica Esteve, Jose Vicente Leal: Mostrar texto con Scroll,
                       primera aproximación
+ 0.12   17-05-2016  Nacho:
+                      Corregidos "do-while" incorrectos en añadir
+                      Se propone la fecha actual (primer acercamiento: día)
+                      Renombrada la variable "año" a "anyo"
+
 */
 
 using System;
@@ -23,23 +28,24 @@ public class GestorDeTareas
 
     public static void Main(string[] args)
     {
-        ListaDeTareas miTarea = new ListaDeTareas();
-        List<string> ListaTareas = new List<string>();
+        ListaDeTareas tareas = new ListaDeTareas();
+        tareas.Cargar();
         byte option;
+        DateTime fechaMostrar = DateTime.Now;
             
         do
         {
             // Cargamos la Lista de Tareas
-            //ListaTareas = miTarea.Cargar();
+            List<string> tareasMostrar = tareas.DevuelveFecha(fechaMostrar);
 
             //Cabecera de la pantalla principal
             Console.WriteLine("Prio    Categoria    Fecha           Descripcion");
             Console.WriteLine("------------------------------------------------");
 
             //Mostramos en pantalla la lista de tareas
-            for (int i = 0; i < ListaTareas.Count; i++)
+            for (int i = 0; i < tareasMostrar.Count; i++)
             {
-                Console.WriteLine(ListaTareas[i]);
+                Console.WriteLine(tareasMostrar[i]);
             }
 
             //Lista de opciones a elegir
@@ -56,32 +62,38 @@ public class GestorDeTareas
                 case (int)options.AÑADIR:
 
                     // Variables auxiliares para rellenar en las tareas nuevas
-                    int dia = 0, mes = 0, año = 0;
+                    string respuesta;
+                    int dia = 0, mes = 0, anyo = 0;
                     string tarea = "", categoria = "";
                     byte prioridad = 0;
 
                     // Datos a rellenar de cada tarea
                     // Los obligatorios van blindados con do-while
-
+                    DateTime ahora = DateTime.Now;
                     do
                     {
-                        Console.Write("Inserte el dia: ");
-                        dia = Convert.ToInt32(Console.ReadLine());
-                    } while (dia != 0);
+                        int diaPropuesto = ahora.Day;
+                        Console.Write("Inserte el dia (Intro para {0}): ", diaPropuesto);
+                        respuesta = Console.ReadLine();
+                        if (respuesta == "")
+                            dia = diaPropuesto;
+                        else
+                            dia = Convert.ToInt32(respuesta);
+                    } while (dia == 0);
 
                     do
                     {
                         Console.Write("Inserte el mes: ");
                         mes = Convert.ToInt32(Console.ReadLine());
-                    } while (mes != 0);
+                    } while (mes == 0);
 
                     do
                     {
                         Console.Write("Inserte el año: ");
-                        año = Convert.ToInt32(Console.ReadLine());
-                    } while (año != 0);
+                        anyo = Convert.ToInt32(Console.ReadLine());
+                    } while (anyo == 0);
 
-                    DateTime fecha = new DateTime(año, mes, dia);
+                    DateTime fecha = new DateTime(anyo, mes, dia);
 
                     Console.Write("Inserte la hora (opcional): ");
                     string hora = Console.ReadLine();
@@ -90,25 +102,27 @@ public class GestorDeTareas
                     {
                         Console.Write("Descripcion de la tarea: ");
                         tarea = Console.ReadLine();
-                    } while (tarea != "");
+                    } while (tarea == "");
 
                     Console.Write("Inserte la duracion (opcional): ");
                     string duracion = Console.ReadLine();
 
                     do
                     {
-                        Console.Write("Categoria de la tarea: ");
+                        Console.Write("Categoría de la tarea: ");
                         categoria = Console.ReadLine();
-                    } while (categoria != "");
+                    } while (categoria == "");
 
                     do
                     {
                         Console.Write("Prioridad de la tarea(1-5): ");
                         prioridad = Convert.ToByte(Console.ReadLine());
-                    } while (prioridad != 0);
+                    } while ((prioridad < 1) || (prioridad > 5));
 
-                    //miTarea.Añadir(fecha, hora, tarea, duracion, categoria, prioridad);
-                    //miTarea.Guardar();
+                    tareas.Anyadir(fecha, hora, tarea, duracion, categoria, prioridad);
+                    bool guardadoCorrecto = tareas.Guardar();
+                    if (!guardadoCorrecto)
+                        Console.WriteLine("No se ha podido guardar!");
                     break;
 
                 case (int)options.MODIFICAR:

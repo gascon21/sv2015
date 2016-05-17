@@ -7,7 +7,12 @@ Version    Fecha    Por, cambios
  0.01   16-05-2016  Nacho, esqueleto vacío
  0.10   16-05-2016  Jose Muñoz y Miguel Moya: Primeras funcionalidades
  0.11   16-05-2016  Sergio Martinez y David Gascón: Cargar y guardar
-*/
+ 0.12   17-05-2016  Nacho:
+                      Renombradas "_lista" a "lista", "tareas" a "lista"
+                      Renombradas "Añadir" a "Anyadir"
+                      Anayadir realmente añade datos a la lista
+                      Guardar ahora es público
+ */
 
 using System;
 using System.Collections.Generic;
@@ -15,24 +20,25 @@ using System.IO;
 
 class ListaDeTareas
 {
-    private List<Tarea> _lista;
+    private List<Tarea> lista;
 
 
     public ListaDeTareas()
     {
-        _lista = new List<Tarea>();
+        lista = new List<Tarea>();
     }
 
 
     // Creamos 3 constructores
     // Constructor con todos los datos
-    public bool Añadir(DateTime tiempo, string hora, string descripcion,
+    public bool Anyadir(DateTime tiempo, string hora, string descripcion,
             string duracion, string categoria, byte prioridad)
     {
         try
         {
             Tarea tarea = new Tarea(tiempo, hora, descripcion, duracion,
                 categoria, prioridad);
+            lista.Add(tarea);
             return true;
         }
         catch (Exception)
@@ -42,13 +48,14 @@ class ListaDeTareas
     }
 
     // Constructor sin duracion
-    public bool Añadir(DateTime tiempo, string hora, string descripcion,
+    public bool Anyadir(DateTime tiempo, string hora, string descripcion,
        string categoria, byte prioridad)
     {
         try
         {
             Tarea tarea = new Tarea(tiempo, hora, descripcion,
                 categoria, prioridad);
+            lista.Add(tarea);
             return true;
         }
         catch (Exception)
@@ -58,12 +65,13 @@ class ListaDeTareas
     }
 
     // Constructor sin hora
-    public bool Añadir(DateTime tiempo, string descripcion, string categoria,
+    public bool Anyadir(DateTime tiempo, string descripcion, string categoria,
         byte prioridad)
     {
         try
         {
             Tarea tarea = new Tarea(tiempo, descripcion, categoria, prioridad);
+            lista.Add(tarea);
             return true;
         }
         catch (Exception)
@@ -77,7 +85,7 @@ class ListaDeTareas
         try
         {
             // Creamos una tarea temporal para modificar la de la lista
-            Tarea tTemp = _lista[posicion];
+            Tarea tTemp = lista[posicion];
             tTemp.Fecha = fecha;
             return true;
         }
@@ -99,7 +107,7 @@ class ListaDeTareas
     {
         try
         {
-            _lista.RemoveAt(posicion);
+            lista.RemoveAt(posicion);
             return true;
         }
         catch (Exception)
@@ -121,9 +129,9 @@ class ListaDeTareas
         try
         {
             Tarea tTemp;
-            tTemp = _lista[posicion];
+            tTemp = lista[posicion];
             tTemp.MarcarComoCompletada();
-            _lista[posicion] = tTemp;
+            lista[posicion] = tTemp;
             return true;
         }
         // TO DO
@@ -136,50 +144,50 @@ class ListaDeTareas
 
     public Tarea Buscar(int posicion)
     {
-        return _lista[posicion];
+        return lista[posicion];
     }
 
 
     public List<string> DevuelveFecha()
     {
-        List<string> lista = new List<string>();
-        for (int i = 0; i < _lista.Count; i++)
-            lista.Add(_lista[i].ToString());
-        return lista;
+        List<string> resultados = new List<string>();
+        for (int i = 0; i < lista.Count; i++)
+            resultados.Add(lista[i].ToString());
+        return resultados;
     }
 
     public List<string> DevuelveFecha(DateTime fecha)
     {
-        List<string> lista = new List<string>();
-        for (int i = 0; i < _lista.Count; i++)
-            if (_lista[i].Fecha == fecha)
-                lista.Add(_lista[i].ToString());
-        return lista;
+        List<string> resultados = new List<string>();
+        for (int i = 0; i < lista.Count; i++)
+            if (lista[i].Fecha == fecha)
+                resultados.Add(lista[i].ToString());
+        return resultados;
     }
 
 
     public List<Tarea> GetTareas()
     {
-        return _lista;
+        return lista;
     }
 
 
     //The program writes in play text the data of a whole list of "Tareas"
-    private static bool Save(List<Tarea> tareas)
+    public bool Guardar()
     {
         try
         {
             StreamWriter FichSalida = File.CreateText("tareas.dat");
 
-            for (int i = 0; i < tareas.Count; i++)
+            for (int i = 0; i < lista.Count; i++)
             {
-                FichSalida.WriteLine(tareas[i].Fecha);
-                FichSalida.WriteLine(tareas[i].Hora);
-                FichSalida.WriteLine(tareas[i].Descripcion);
-                FichSalida.WriteLine(tareas[i].DuracionMin);
-                FichSalida.WriteLine(tareas[i].Categoria);
-                FichSalida.WriteLine(tareas[i].Prioridad);
-                FichSalida.WriteLine(tareas[i].Completado);
+                FichSalida.WriteLine(lista[i].Fecha);
+                FichSalida.WriteLine(lista[i].Hora);
+                FichSalida.WriteLine(lista[i].Descripcion);
+                FichSalida.WriteLine(lista[i].DuracionMin);
+                FichSalida.WriteLine(lista[i].Categoria);
+                FichSalida.WriteLine(lista[i].Prioridad);
+                FichSalida.WriteLine(lista[i].Completado);
             }
 
             FichSalida.Close();
@@ -192,7 +200,7 @@ class ListaDeTareas
     }
 
     //The program reads from the text file and using a temp "Tarea" object will load a list of "Tareas"
-    public bool Load()
+    public bool Cargar()
     {
         if (File.Exists("tareas.dat"))
         {
@@ -220,7 +228,7 @@ class ListaDeTareas
                         tareaTemp.Completado = Convert.ToBoolean(FichEntrada.ReadLine());
                         //tareaTemp.Completado = Convert.ToBoolean(FichEntrada.ReadLine());
 
-                        _lista.Add(tareaTemp);
+                        lista.Add(tareaTemp);
                     }
                 }
                 while (linea != null);

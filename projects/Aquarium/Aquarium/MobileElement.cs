@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Aquarium - SDL
+// 0.01  20-05-2016  David Gascón, Jorge Montalvo, Indra López: First version
+// 0.02  22-05-2016  Nacho: Movement; corrected SetSpeedX and SetSpeedY
 
 namespace Aquarium
 {
@@ -27,16 +25,23 @@ namespace Aquarium
         }
         public void SetSpeedX(int newSpeedX)
         {
-            newSpeedX = speedX;
+            speedX = newSpeedX;
         }
         public void SetSpeedY(int newSpeedY)
         {
-            newSpeedY = speedY;
+            speedY = newSpeedY;
         }
 
         public override void Move()
         {
-            
+            x += speedX;
+            y += speedY;
+            // Fishes: left to right and vice cersa
+            if ((x > 1360) || (x < 0))
+                speedX = -speedX;
+            // Bubbles: upwards
+            if (y < 0)
+                y = 800;
         }
     }
 }

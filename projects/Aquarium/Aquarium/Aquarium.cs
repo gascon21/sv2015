@@ -1,11 +1,8 @@
-﻿// David Gascón, Jorge Montalvo, Indra López
-// Aquiarium with SDL
+﻿// Aquarium - SDL
+// 0.01  20-05-2016  David Gascón, Jorge Montalvo, Indra López: First version
+// 0.02  22-05-2016  Nacho: Movement; ESC to exit
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aquarium
 {
@@ -20,6 +17,8 @@ namespace Aquarium
         Image fish5 = new Image("fish5.png");
         Image bubble = new Image("bubble.png");
         Random r = new Random(5);
+        bool finished = false;
+
         public Aquarium()
         {
             moveds = new MobileElement[10];
@@ -29,32 +28,39 @@ namespace Aquarium
             moveds[3] = new MobileElement(r.Next(0, 1366), r.Next(0, 768), fish3, 1, 0);
             moveds[4] = new MobileElement(r.Next(0, 1366), r.Next(0, 768), fish4, 3, 0);
             moveds[5] = new MobileElement(r.Next(0, 1366), r.Next(0, 768), fish5, 4, 0);
-            moveds[6] = new MobileElement(r.Next(0, 1366), r.Next(0, 768), bubble, 0, 2);
-            moveds[7] = new MobileElement(r.Next(0, 1366), r.Next(0, 768), bubble, 0, 4);
-            moveds[8] = new MobileElement(r.Next(0, 1366), r.Next(0, 768), bubble, 0, 3);
-            moveds[9] = new MobileElement(r.Next(0, 1366), r.Next(0, 768), bubble, 0, 2);
+            moveds[6] = new MobileElement(r.Next(0, 1366), r.Next(0, 768), bubble, 0, -2);
+            moveds[7] = new MobileElement(r.Next(0, 1366), r.Next(0, 768), bubble, 0, -4);
+            moveds[8] = new MobileElement(r.Next(0, 1366), r.Next(0, 768), bubble, 0, -3);
+            moveds[9] = new MobileElement(r.Next(0, 1366), r.Next(0, 768), bubble, 0, -2);
         }
 
         public void Run()
         {
-
-            for(int i = 0; i < moveds.Length ; i ++)
-                moveds[i].Draw();
-            Hardware.ShowHiddenScreen();
-            
+            do { 
+                // Draw
+                Hardware.ClearScreen();
+                for(int i = 0; i < moveds.Length ; i ++)
+                    moveds[i].Draw();
+                Hardware.ShowHiddenScreen();
+                // Move
+                for (int i = 0; i < moveds.Length; i++)
+                    moveds[i].Move();
+                // Check if we must exit
+                if (Hardware.KeyPressed(Hardware.KEY_ESC))
+                    finished = true;
+                // And delay before the next frame
+                Hardware.Pause(25);
+            }
+            while (!finished);
         }
+
         static void Main(string[] args)
         {
             bool fullScreen = false;
             Hardware.Init(1366, 768, 24, fullScreen);
 
             Aquarium a = new Aquarium();
-
-            do
-            {
-                a.Run();
-            } while (true);
-
+            a.Run();
         }
     }
 }

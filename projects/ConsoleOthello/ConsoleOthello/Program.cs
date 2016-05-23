@@ -1,4 +1,6 @@
-﻿// Jose Muñoz, Monica Esteve, Carla Liarte, José Vicente Leal
+﻿// Console Othello
+// 0.01  20-05-2016  Jose Muñoz, Monica Esteve, Carla Liarte, José Vicente Leal: First version
+// 0.02  23-05-2016  Nacho: Improved translation to English, created constructor
 
 using System;
 using System.IO;
@@ -9,9 +11,9 @@ public class Othello
     static bool finished = false;
     static string[,] table = new string[SIZE, SIZE];
     // true X - negras, false O - blancas
-    static bool turn = true;
+    static bool whiteTurn = true;
 
-    public static void Init()
+    public Othello()
     {
         for (int i = 0; i < SIZE; i++)
         {
@@ -25,7 +27,8 @@ public class Othello
         table[4, 3] = "O";
         table[4, 4] = "X";
     }
-    public static void Draw()
+
+    public void Draw()
     {
         Console.Clear();
         for (int i = 0; i < SIZE; i++)
@@ -46,21 +49,21 @@ public class Othello
             }
             Console.WriteLine();
         }
-        if (turn)
+        if (whiteTurn)
         {
-            CountData();
-            Console.WriteLine("Turno de Negras X");
+            DisplayCounters();
+            Console.WriteLine("Black turn (X)");
         }
         else
         {
-            CountData();
-            Console.WriteLine("Turno de Blancas O");
+            DisplayCounters();
+            Console.WriteLine("White turn (O)");
         }
         Console.WriteLine();
 
     }
 
-    public static void CountData()
+    public void DisplayCounters()
     {
         int countBlacks = 0;
         int countWhites = 0;
@@ -80,44 +83,44 @@ public class Othello
                 }
             }
         }
-        Console.WriteLine("Blacks : " + countBlacks + " | Whites : " + countWhites);
+        Console.WriteLine("Black : " + countBlacks + " | White : " + countWhites);
     }
 
-    public static void askposition(ref int x, ref int y)
+    public void AskPosition(ref int x, ref int y)
     {
-        bool valida = false;
+        bool valid = false;
         ConsoleKeyInfo key;
         do
         {
 
-            Console.Write("Inserta la fila: ");
+            Console.Write("Enter row: ");
             key = Console.ReadKey();
-            valida = IsValidpos(key);
+            valid = IsInValidRange(key);
             Console.WriteLine();
         }
-        while (!valida && !finished);
+        while (!valid && !finished);
         if (!finished)
         {
-            if (valida)
+            if (valid)
             {
                 x = Convert.ToInt32(key.KeyChar.ToString());
-                valida = false;
+                valid = false;
             }
 
             do
             {
-                Console.Write("Inserta la columna: ");
+                Console.Write("Enter column: ");
                 key = Console.ReadKey();
-                valida = IsValidpos(key);
+                valid = IsInValidRange(key);
                 Console.WriteLine();
             }
-            while (!valida && !finished);
-            if (valida && !finished)
+            while (!valid && !finished);
+            if (valid && !finished)
                 y = Convert.ToInt32(key.KeyChar.ToString());
         }
     }
 
-    public static bool IsValidpos(ConsoleKeyInfo key)
+    public bool IsInValidRange(ConsoleKeyInfo key)
     {
 
         if (key.Key == ConsoleKey.Escape)
@@ -142,7 +145,7 @@ public class Othello
 
     }
 
-    public static bool CheckFinal()
+    public bool IsBoardFull()
     {
         for (int i = 0; i < SIZE; i++)
         {
@@ -154,69 +157,76 @@ public class Othello
         }
         return true;
     }
-    public static string CheckFin(string[,] t)
+
+    public string DisplayWinnerInfo(string[,] t)
     {
         // Blancas O
         // Negras X
-        int countBlanca = 0;
-        int countNegra = 0;
+        int amountOfWhite = 0;
+        int amountOfBlack = 0;
 
         for (int i = 0; i < SIZE; i++)
         {
             for (int j = 0; j < SIZE; j++)
             {
                 if (t[i, j] == "O")
-                    countBlanca++;
+                    amountOfWhite++;
 
                 if (t[i, j] == "X")
-                    countNegra++;
+                    amountOfBlack++;
             }
         }
-        if (countBlanca > countNegra)
+        if (amountOfWhite > amountOfBlack)
         {
-            return "Ganan las BLANCAS";
+            return "WHITE wins";
         }
-        else if (countBlanca == countNegra)
+        else if (amountOfWhite == amountOfBlack)
         {
-            return "EMPATE";
+            return "DRAW!";
         }
         else
-            return "Ganan las NEGRAS";
+            return "BLACK wins";
     }
 
 
 
-    public static void Main(string[] args)
+    public void Run()
     {
-        Init();
         do
         {
             Draw();
 
-            // pide coordenadas
+            // Ask for coordinates
             int row = 1;
             int col = 1;
 
-            askposition(ref row, ref col);
+            AskPosition(ref row, ref col);
 
-            if (turn && table[row - 1, col - 1] == "-" && !finished)
+            if (whiteTurn && table[row - 1, col - 1] == "-" && !finished)
             {
                 table[(row - 1), (col - 1)] = "X";
-                turn = !turn;
+                whiteTurn = !whiteTurn;
             }
-            else if ((!turn) && table[row - 1, col - 1] == "-" && !finished)
+            else if ((!whiteTurn) && table[row - 1, col - 1] == "-" && !finished)
             {
                 table[(row - 1), (col - 1)] = "O";
-                turn = !turn;
+                whiteTurn = !whiteTurn;
             }
 
-            if (CheckFinal())
+            if (IsBoardFull())
             {
                 Draw();
-                Console.WriteLine(CheckFin(table));
+                Console.WriteLine(DisplayWinnerInfo(table));
                 Console.ReadLine();
             }
         } while (!finished);
+    }
+
+
+    public static void Main(string[] args)
+    {
+        Othello o = new Othello();
+        o.Run();
     }
 
 

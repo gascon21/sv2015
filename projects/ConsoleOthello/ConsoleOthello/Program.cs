@@ -1,8 +1,8 @@
 ﻿// Console Othello
 // 0.01  20-05-2016  Jose Muñoz, Monica Esteve, Carla Liarte, José Vicente Leal: First version
 // 0.02  23-05-2016  Nacho: Improved translation to English, created constructor
-// 0.03  23-05-2016  Nacho: Board data are char, not string. i,j replaced by col,row.
-//                       First approach to ProcessMove.
+// 0.03  23-05-2016  Nacho: Board data are char, not string. i,j -> row, col. First approach to ProcessMove.
+// 0.04  23-05-2016  Nacho: Apparently correct tiles flipping. Consts BLACK_PIECE and WHITE_PIECE
 
 using System;
 using System.IO;
@@ -10,10 +10,11 @@ using System.IO;
 public class Othello
 {
     const int SIZE = 8;
-    static bool finished = false;
-    static char[,] table = new char[SIZE, SIZE];
-    // true X - negras, false O - blancas
-    static bool whiteTurn = true;
+    const char WHITE_PIECE = 'O';
+    const char BLACK_PIECE = 'X';
+    bool finished = false;
+    char[,] table = new char[SIZE, SIZE];
+    bool whiteTurn = false;
 
     public Othello()
     {
@@ -24,10 +25,10 @@ public class Othello
                 table[col, row] = '-';
             }
         }
-        table[3, 3] = 'X';
-        table[3, 4] = 'O';
-        table[4, 3] = 'O';
-        table[4, 4] = 'X';
+        table[3, 3] = WHITE_PIECE;
+        table[3, 4] = BLACK_PIECE;
+        table[4, 3] = BLACK_PIECE;
+        table[4, 4] = WHITE_PIECE;
     }
 
     public void Draw()
@@ -51,18 +52,12 @@ public class Othello
             }
             Console.WriteLine();
         }
-        if (whiteTurn)
-        {
-            DisplayCounters();
-            Console.WriteLine("Black turn (X)");
-        }
-        else
-        {
-            DisplayCounters();
-            Console.WriteLine("White turn (O)");
-        }
+        DisplayCounters();
         Console.WriteLine();
-
+        if (!whiteTurn)
+            Console.WriteLine("Black turn (" + BLACK_PIECE +")");
+        else
+            Console.WriteLine("White turn (" + WHITE_PIECE +")");
     }
 
     public void DisplayCounters()
@@ -74,12 +69,12 @@ public class Othello
         {
             for (int col = 0; col < SIZE; col++)
             {
-                if (table[col, row] == 'X')
+                if (table[col, row] == BLACK_PIECE)
                 {
                     countBlacks++;
                 }
 
-                if (table[col, row] == 'O')
+                if (table[col, row] == WHITE_PIECE)
                 {
                     countWhites++;
                 }
@@ -120,6 +115,10 @@ public class Othello
             if (valid && !finished)
                 y = Convert.ToInt32(key.KeyChar.ToString()) - 1;
         }
+
+        // TO DO: Check if it is an acceptable position
+        // (which would lead to winning at least one tile)
+
     }
 
     public bool IsInValidRange(ConsoleKeyInfo key)
@@ -135,39 +134,48 @@ public class Othello
 
     public void ProcessMove(int col, int row, char playerSymbol)
     {
-        char otherPlayerSymbol = playerSymbol == 'X' ? 'O' : 'X';
+        char otherPlayerSymbol = playerSymbol == BLACK_PIECE ? 
+            WHITE_PIECE : BLACK_PIECE;
         int x, y;
 
-        // Horizontal rightwards
-        x = col; y = row;
-        // If the next cell is not ours
-        if ((col < 7) && (table[col + 1, row] == otherPlayerSymbol))
+        for (int xIncr = -1; xIncr <= 1; xIncr++)
         {
-            x ++;
-            // Skip the other player's cells
-            while ((x < 7) && (table[x, row] == otherPlayerSymbol))
-                x++;
-            // If the next one is ours, then we can turn those cells
-            if ((x < 7) && (table[x, row] == playerSymbol))
-                for (int c = col; c <= x; c++)
-                    table[c, row] = playerSymbol;
+            for (int yIncr = -1; yIncr <= 1; yIncr++)
+            {
+                if ((xIncr == 0) && (yIncr == 0))
+                    continue;
 
+                x = col; y = row;
+                // If the next cell is not ours
+                if ((x + xIncr >= 0) && (x + xIncr <= 7) &&
+                    (y + yIncr >= 0) && (y + yIncr <= 7) &&
+                    (table[x + xIncr, y + yIncr] == otherPlayerSymbol))
+                {
+                    x += xIncr;
+                    y += yIncr;
+                    // Skip the other player's cells
+                    while ((x + xIncr >= 0) && (x + xIncr <= 7) &&
+                        (y + yIncr >= 0) && (y + yIncr <= 7) &&
+                        (table[x + xIncr, y + yIncr] == otherPlayerSymbol))
+                    {
+                        x += xIncr;
+                        y += yIncr;
+                    }
+                    // If the next one is ours, then we can turn those cells
+                    if ((x + xIncr >= 0) && (x + xIncr <= 7) &&
+                            (y + yIncr >= 0) && (y + yIncr <= 7) &&
+                            (table[x + xIncr, y + yIncr] == playerSymbol))
+                    {
+                        x += xIncr;
+                        y += yIncr;
+                        for (int c = col, r = row; c != x || r != y; c += xIncr, r += yIncr)
+                            table[c, r] = playerSymbol;
+                    }
+                }
+            }
         }
-
-        // TO DO: Process the other directions
     }
 
-    public void Jugada(int x, int y)
-    {
-        int posStart = x - 1;
-        int posEnd = 8;
-
-        for (int row = x; row < posEnd; row++)
-        {
-
-        }
-
-    }
 
     public bool IsBoardFull()
     {
@@ -193,10 +201,10 @@ public class Othello
         {
             for (int col = 0; col < SIZE; col++)
             {
-                if (t[col, row] == 'O')
+                if (t[col, row] == WHITE_PIECE)
                     amountOfWhite++;
 
-                if (t[col, row] == 'X')
+                if (t[col, row] == BLACK_PIECE)
                     amountOfBlack++;
             }
         }
@@ -226,16 +234,16 @@ public class Othello
 
             AskPosition(ref row, ref col);
 
-            if (whiteTurn && table[col, row] == '-' && !finished)
+            if ((!whiteTurn) && table[col, row] == '-' && !finished)
             {
-                table[col, row] = 'X';
-                ProcessMove(col, row, 'X');
+                table[col, row] = BLACK_PIECE;
+                ProcessMove(col, row, BLACK_PIECE);
                 whiteTurn = !whiteTurn;
             }
-            else if ((!whiteTurn) && table[col, row] == '-' && !finished)
+            else if (whiteTurn && table[col, row] == '-' && !finished)
             {
-                table[col, row] = 'O';
-                ProcessMove(col, row, 'O');
+                table[col, row] = WHITE_PIECE;
+                ProcessMove(col, row, WHITE_PIECE);
                 whiteTurn = !whiteTurn;
             }
 
@@ -254,21 +262,4 @@ public class Othello
         Othello o = new Othello();
         o.Run();
     }
-
-
-    public static void TempPosition(ref int x, ref int y)
-    {
-        StreamReader myFile = File.OpenText("EntradaPrueba.txt");
-        string line = "";
-        do
-        {
-            line = myFile.ReadLine();
-            if (line != null)
-            {
-                // TO DO
-            }
-        } while (line != null);
-        myFile.Close();
-    }
 }
-

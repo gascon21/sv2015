@@ -3,6 +3,7 @@
 // 0.02  23-05-2016  Nacho: Improved translation to English, created constructor
 // 0.03  23-05-2016  Nacho: Board data are char, not string. i,j -> row, col. First approach to ProcessMove.
 // 0.04  23-05-2016  Nacho: Apparently correct tiles flipping. Consts BLACK_PIECE and WHITE_PIECE
+// 0.05  27-05-2016  Nacho: User can only choose a valid position
 
 using System;
 using System.IO;
@@ -31,6 +32,9 @@ public class Othello
         table[4, 4] = WHITE_PIECE;
     }
 
+    /// <summary>
+    /// Diplay the current state of the board
+    /// </summary>
     public void Draw()
     {
         Console.Clear();
@@ -55,11 +59,14 @@ public class Othello
         DisplayCounters();
         Console.WriteLine();
         if (!whiteTurn)
-            Console.WriteLine("Black turn (" + BLACK_PIECE +")");
+            Console.WriteLine("Black turn (" + BLACK_PIECE + ")");
         else
-            Console.WriteLine("White turn (" + WHITE_PIECE +")");
+            Console.WriteLine("White turn (" + WHITE_PIECE + ")");
     }
 
+    /// <summary>
+    /// Display amount of pieces each player has
+    /// </summary>
     public void DisplayCounters()
     {
         int countBlacks = 0;
@@ -83,44 +90,67 @@ public class Othello
         Console.WriteLine("Black : " + countBlacks + " | White : " + countWhites);
     }
 
-    public void AskPosition(ref int x, ref int y)
+    /// <summary>
+    /// Ask for the next position to move
+    /// </summary>
+    /// <param name="x">Chosen column</param>
+    /// <param name="y">Chosen row</param>
+    /// <param name="playerSymbol">Symbol which represents fe current player</param>
+    public void AskPosition(ref int x, ref int y, char playerSymbol)
     {
-        bool valid = false;
-        ConsoleKeyInfo key;
+        bool validPosition = false;
         do
         {
-            Console.Write("Enter row (1 to 8): ");
-            key = Console.ReadKey();
-            valid = IsInValidRange(key);
-            Console.WriteLine();
-        }
-        while (!valid && !finished);
-
-        if (!finished)
-        {
-            if (valid)
-            {
-                x = Convert.ToInt32(key.KeyChar.ToString()) - 1;
-                valid = false;
-            }
-
+            bool validChar = false;
+            ConsoleKeyInfo key;
             do
             {
-                Console.Write("Enter column (1 to 8): ");
+                Console.Write("Enter row (1 to 8): ");
                 key = Console.ReadKey();
-                valid = IsInValidRange(key);
+                validChar = IsInValidRange(key);
                 Console.WriteLine();
             }
-            while (!valid && !finished);
-            if (valid && !finished)
-                y = Convert.ToInt32(key.KeyChar.ToString()) - 1;
-        }
+            while (!validChar && !finished);
 
+            if (!finished)
+            {
+                if (validChar)
+                {
+                    x = Convert.ToInt32(key.KeyChar.ToString()) - 1;
+                    validChar = false;
+                }
+
+                do
+                {
+                    Console.Write("Enter column (1 to 8): ");
+                    key = Console.ReadKey();
+                    validChar = IsInValidRange(key);
+                    Console.WriteLine();
+                }
+                while (!validChar && !finished);
+                if (validChar && !finished)
+                    y = Convert.ToInt32(key.KeyChar.ToString()) - 1;
+            }
+
+            if (finished)  // Esc pressed?
+                break;
+
+            if (IsValidPosition(x, y, playerSymbol))
+                validPosition = true;
+            else
+                Console.WriteLine("Not a valid position for this player!");
+        }
+        while (!validPosition);
         // TO DO: Check if it is an acceptable position
         // (which would lead to winning at least one tile)
 
     }
 
+    /// <summary>
+    /// Checks if the key pressed by the user is 1..8 or ESC
+    /// </summary>
+    /// <param name="key">Key pressed</param>
+    /// <returns></returns>
     public bool IsInValidRange(ConsoleKeyInfo key)
     {
 
@@ -132,9 +162,16 @@ public class Othello
         return false;
     }
 
+    /// <summary>
+    /// Process a move in certain coordinates by a certain user:
+    /// Flips all the corresponding pieces
+    /// </summary>
+    /// <param name="col">Column, 0-based</param>
+    /// <param name="row">Row, 0-based</param>
+    /// <param name="playerSymbol">Char which identifies the user</param>
     public void ProcessMove(int col, int row, char playerSymbol)
     {
-        char otherPlayerSymbol = playerSymbol == BLACK_PIECE ? 
+        char otherPlayerSymbol = playerSymbol == BLACK_PIECE ?
             WHITE_PIECE : BLACK_PIECE;
         int x, y;
 
@@ -176,7 +213,61 @@ public class Othello
         }
     }
 
+    /// <summary>
+    /// Returns true if a certain position is valid for a player
+    /// </summary>
+    /// <param name="col">Column, 0-based</param>
+    /// <param name="row">Row, 0-based</param>
+    /// <param name="playerSymbol">Char which identifies the user</param>
+    public bool IsValidPosition(int col, int row, char playerSymbol)
+    {
+        bool valid = false;
+        char otherPlayerSymbol = playerSymbol == BLACK_PIECE ?
+            WHITE_PIECE : BLACK_PIECE;
+        int x, y;
 
+        for (int xIncr = -1; xIncr <= 1; xIncr++)
+        {
+            for (int yIncr = -1; yIncr <= 1; yIncr++)
+            {
+                if ((xIncr == 0) && (yIncr == 0))
+                    continue;
+
+                x = col; y = row;
+                // If the next cell is not ours
+                if ((x + xIncr >= 0) && (x + xIncr <= 7) &&
+                    (y + yIncr >= 0) && (y + yIncr <= 7) &&
+                    (table[x + xIncr, y + yIncr] == otherPlayerSymbol))
+                {
+                    x += xIncr;
+                    y += yIncr;
+                    // Skip the other player's cells
+                    while ((x + xIncr >= 0) && (x + xIncr <= 7) &&
+                        (y + yIncr >= 0) && (y + yIncr <= 7) &&
+                        (table[x + xIncr, y + yIncr] == otherPlayerSymbol))
+                    {
+                        x += xIncr;
+                        y += yIncr;
+                    }
+                    // If the next one is ours, then we can turn those cells
+                    if ((x + xIncr >= 0) && (x + xIncr <= 7) &&
+                            (y + yIncr >= 0) && (y + yIncr <= 7) &&
+                            (table[x + xIncr, y + yIncr] == playerSymbol))
+                    {
+                        x += xIncr;
+                        y += yIncr;
+                        for (int c = col, r = row; c != x || r != y; c += xIncr, r += yIncr)
+                            valid = true;
+                    }
+                }
+            }
+        }
+        return valid;
+    }
+
+    /// <summary>
+    /// Returns true if the board is full
+    /// </summary>
     public bool IsBoardFull()
     {
         for (int row = 0; row < SIZE; row++)
@@ -190,7 +281,7 @@ public class Othello
         return true;
     }
 
-    public string DisplayWinnerInfo(char[,] t)
+    public string GetWinnerInfo(char[,] t)
     {
         // Blancas O
         // Negras X
@@ -221,27 +312,28 @@ public class Othello
     }
 
 
-
+    /// <summary>
+    /// Main game loop
+    /// </summary>
     public void Run()
     {
         do
         {
             Draw();
 
-            // Ask for coordinates
             int row = 1;
             int col = 1;
 
-            AskPosition(ref row, ref col);
-
             if ((!whiteTurn) && table[col, row] == '-' && !finished)
             {
+                AskPosition(ref row, ref col, BLACK_PIECE);
                 table[col, row] = BLACK_PIECE;
                 ProcessMove(col, row, BLACK_PIECE);
                 whiteTurn = !whiteTurn;
             }
             else if (whiteTurn && table[col, row] == '-' && !finished)
             {
+                AskPosition(ref row, ref col, WHITE_PIECE);
                 table[col, row] = WHITE_PIECE;
                 ProcessMove(col, row, WHITE_PIECE);
                 whiteTurn = !whiteTurn;
@@ -250,7 +342,7 @@ public class Othello
             if (IsBoardFull())
             {
                 Draw();
-                Console.WriteLine(DisplayWinnerInfo(table));
+                Console.WriteLine(GetWinnerInfo(table));
                 Console.ReadLine();
             }
         } while (!finished);
